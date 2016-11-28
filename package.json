@@ -1,5 +1,5 @@
 {
-  "name": "Base",
+  "name": "Node doc manager",
   "version": "1.0.0",
   "description": "Pdf doc manager built with node, epxress and redis",
   "main": "app.js",
@@ -8,13 +8,12 @@
     "test": "node_modules/.bin/mocha tests/**"
   },
   "keywords": [
-    "base",
     "project",
     "node",
     "express",
     "structure"
   ],
-  "author": "Terlici Ltd.",
+  "author": "Luca Ronca",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.12.3",

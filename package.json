@@ -1,7 +1,7 @@
 {
   "name": "Base",
   "version": "1.0.0",
-  "description": "Basic structure for Express web apps.",
+  "description": "Pdf doc manager built with node, epxress and redis",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

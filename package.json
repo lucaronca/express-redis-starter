@@ -1,5 +1,5 @@
 {
-  "name": "Node doc manager",
+  "name": "Node_doc_manager",
   "version": "1.0.0",
   "description": "Pdf doc manager built with node, epxress and redis",
   "main": "app.js",

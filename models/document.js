@@ -1,4 +1,9 @@
-const client = require('../db.js');
+const
+	client = require('../db.js'),
+	KeyGenerator = require('../helpers/keyGenerator');
+
+let generator = new KeyGenerator(16);
+
 
 // Create new document in your database and return its id
 exports.create = function(id, title, content, date, cb) {
@@ -11,7 +16,7 @@ exports.create = function(id, title, content, date, cb) {
 			month: date.month,
 			yeat: date.year
 		},
-		actualDate: new Date().ToString()
+		actualDate: new Date().toString()
 	};
 
 	// My object will be an array with a random key, content is the first value, object data the second
@@ -48,12 +53,6 @@ function errorHandler(err) {
 		console.error('error in create model');
 		throw new Error(err);
 	}
-
-}
-
-function generateKey() {
-
-    return ("0000" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4);
 
 }
 

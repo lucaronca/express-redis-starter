@@ -1,6 +1,6 @@
 const redis = require('redis'),
 	//creates a new client
-	client = redis.createClient( 7000, '127.0.0.1', {'return_buffers': true} );
+	client = redis.createClient();
 
 client.on('connect', function() {
 	console.log('connected to redis');

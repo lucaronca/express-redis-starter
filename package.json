@@ -2,6 +2,7 @@
   "name": "Node_doc_manager",
   "version": "1.0.0",
   "description": "Pdf doc manager built with node, epxress and redis",
+  "repository": "https://github.com/lucaronca/node-doc-manager",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -19,6 +20,7 @@
     "body-parser": "^1.12.3",
     "ejs": "^2.5.2",
     "express": "^4.12.3",
+    "formidable": "^1.0.17",
     "redis": "^2.6.3"
   },
   "devDependencies": {

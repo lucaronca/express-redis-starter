@@ -5,27 +5,20 @@ const
 let generator = new KeyGenerator(16);
 
 
-// Create new document in your database and return its id
-exports.create = function(id, title, content, date, cb) {
+// Create new document in database and return its id
+exports.create = function(title, date, cb) {
 
 	//@TODO check if content is buffer, create id
 
-	let dataInfo = {
+	let data = {
 		title,
-		date: {
-			month: date.month,
-			yeat: date.year
-		},
+		month: date.month,
+		year: date.year,
 		actualDate: new Date().toString()
 	};
 
-	// My object will be an array with a random key, content is the first value, object data the second
 
-	var key = generateKey();
-
-	client.lpush(key, content);
-
-	client.lpush(key, JSON.stringify(dataInfo));
+	client.hmset( generator.create(), data, cb );
 
 }
 

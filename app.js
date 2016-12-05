@@ -14,9 +14,12 @@ app.use(express.static(path.join(__dirname, '/static')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Common middlewares
+app.use(require('./middlewares/render'));
+
 // App logic
 app.use(require('./controllers'));
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
   console.log('Listening on port ' + app.get('port'))
 });

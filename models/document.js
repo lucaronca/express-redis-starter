@@ -6,7 +6,7 @@ let generator = new KeyGenerator(16);
 
 
 // Create new document in database and return its id
-exports.create = function(title, date, cb) {
+exports.create = (title, date, cb) => {
 
 	//@TODO check if content is buffer, create id
 

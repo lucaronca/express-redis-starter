@@ -1,8 +1,8 @@
 const
 	client = require('../db.js'),
-	KeyGenerator = require('../helpers/keyGenerator');
+	KeyGenerator = require('../helpers/keys');
 
-let generator = new KeyGenerator(16);
+let gen = new KeyGenerator(12);
 
 
 // Create new document in database and return its id
@@ -17,8 +17,17 @@ exports.create = (title, date, cb) => {
 		actualDate: new Date().toString()
 	};
 
+	let key = gen.create();
 
-	client.hmset( generator.create(), data, cb );
+	client.hmset( key, data, ( err, resp ) => {
+
+		if (err) {
+			return cb(err);
+		}
+
+		cb( null, { status: resp, key } );
+
+	});
 
 }
 

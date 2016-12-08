@@ -6,7 +6,7 @@ router.use('/comments', require('./comments'));
 router.use('/upload', require('./upload'));
 
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('pages/home');
 })
 
 module.exports = router

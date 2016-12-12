@@ -1,7 +1,6 @@
 .DS_*
-
 node_modules
-
+# Sass cache #
+public/.sass-cache
 # Saved files #
-###################
 uploads

@@ -1,2 +1,7 @@
 .DS_*
+
 node_modules
+
+# Saved files #
+###################
+uploads

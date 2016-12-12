@@ -57,7 +57,7 @@ exports.create = (title, date, cb) => {
 
 	function pushKeysList() {
 
-		client.lpush( 'keys', key, ( err, resp ) => {
+		client.lpush( 'document:keys', key, ( err, resp ) => {
 
 			if (err) return Promise.reject(err);
 

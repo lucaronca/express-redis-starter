@@ -19,15 +19,68 @@ exports.create = (title, date, cb) => {
 
 	let key = gen.create();
 
-	client.hmset( key, data, ( err, resp ) => {
+	function storeDocData() {
 
-		if (err) {
-			return cb(err);
-		}
+		client.set( key, JSON.stringify(data), ( err, resp ) => {
 
-		cb( null, { status: resp, key } );
+			if (err) return Promise.reject(err);
 
-	});
+			return Promise.resolve();
+
+		});
+
+	}
+
+	function setYear() {
+
+		client.lpush( data.year, key, ( err, resp ) => {
+
+			if (err) return Promise.reject(err);
+
+			return Promise.resolve();
+
+		});
+
+	}
+
+	function setMonth() {
+
+		client.lpush( data.month, key, ( err, resp ) => {
+
+			if (err) return Promise.reject(err);
+
+			return Promise.resolve();
+
+		});
+
+	}
+
+	function pushKeysList() {
+
+		client.lpush( 'keys', key, ( err, resp ) => {
+
+			if (err) return Promise.reject(err);
+
+			return Promise.resolve();
+
+		});
+
+	}
+
+	Promise.all([storeDocData(),
+				setYear(),
+				setMonth(),
+				pushKeysList()])
+		.then( () => {
+
+			cb(null, { key })
+
+		})
+		.catch( err => {
+
+			cb(err);
+
+		});
 
 }
 
@@ -36,7 +89,7 @@ exports.get = function(id, cb) {
   cb(null, {id:id, text: 'Very nice example'})
 }
 
-// Get all comments
+// Get all documents
 exports.all = function(cb) {
 
 	client.lrange('documents', 0, -1, function(err, documents){

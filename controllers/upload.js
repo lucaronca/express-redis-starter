@@ -6,11 +6,12 @@ const
 	fs = require('fs'),
 	Document = require('../models/document');
 
+
 router.get('/', (req, res) => {
 	res.render('pages/upload');
 })
 
-router.post('/send', (req, res) => {
+router.post('/send', (req, res, next) => {
 
 	// create an incoming form object
 	var form = new formidable.IncomingForm();
@@ -28,28 +29,72 @@ router.post('/send', (req, res) => {
 	// store all uploads in the /uploads/tmp directory
 	form.uploadDir = tmp;
 
-	// every time a file has been uploaded successfully,
-	// rename it to a unique key a store upload information in redis
-	form.on('file', (field, file) => {
+	// parse the incoming request containing the form data
+    form.parse(req, (err, fields, files) => {
 
-		handleFileData(file)
-			.then(setFile.bind(null, file))
-			.then(removeTmp)
-			.catch(reason => {
-				console.error('Error in upload controller: ', reason);
+    	if (err) return next(err);
+
+    	// get uploads array either is a single file type
+    	let uploads = (Array.isArray(files.uploads)) ?
+    		files.uploads :
+    		new Array(files.uploads);
+
+		let uploadsP = uploads.map((file) => {
+
+			return processDocumentInEntry(file, fields);
+
+		});
+
+		Promise.all(uploadsP)
+			.then(() => {
+				res.end('file uploaded successfully');
+			})
+			.catch(err => {
+				removeTmp()
+					.then(() => {
+						if (typeof err === 'string') {
+							err = new Error('Error in upload controller: \n' + err);
+						}
+						next(err);
+					});
 			});
 
-	});
+    });
 
-	function handleFileData(file) {
+	function processDocumentInEntry(file, data) {
 
 		return new Promise((resolve, reject) => {
 
-			Document.create('test', { month: 'December', year: 2016 }, (err, data) => {
+			checkType(file)
+				.then(setFileData.bind(this, data))
+				.then(handleFile.bind(this, file))
+				.then(removeTmp)
+				.then(resolve)
+				.catch(reject);
 
-				if (err) reject(new Error(err));
+		})
 
-				resolve(data.key);
+	}
+
+    function checkType(file) {
+
+    	return (file.type === "application/pdf") ?
+
+			Promise.resolve() :
+
+    		Promise.reject(new Error('only pdf are allowed for upload'));
+
+    }
+
+	function setFileData(data) {
+
+		return new Promise((resolve, reject) => {
+
+			Document.create(data.name, { month: data.month, year: data.year }, (err, result) => {
+
+				if (err) reject(err);
+
+				resolve(result.key);
 
 			});
 
@@ -57,7 +102,7 @@ router.post('/send', (req, res) => {
 
 	}
 
-	function setFile(file, name) {
+	function handleFile(file, name) {
 
 		return new Promise((resolve, reject) => {
 
@@ -66,7 +111,7 @@ router.post('/send', (req, res) => {
 			let destFilePath = path.join( destFolder, name + '.pdf' );
 			fs.rename(file.path, destFilePath, err => {
 
-				if (err) reject(new Error(err));
+				if (err) reject(err);
 
 				resolve(destFolder);
 
@@ -78,23 +123,36 @@ router.post('/send', (req, res) => {
 
 	function removeTmp(targetPath) {
 
-		targetPath = path.normalize(targetPath  + '/tmp');
-		fs.rmdirSync(targetPath);
+		return new Promise(resolve => {
+			// remove tmp directory and all temporary files
+			let tmp = (targetPath) ?
+				path.normalize(targetPath  + '/tmp') :
+				path.join(__dirname, '../uploads/tmp');
+
+			if (fs.existsSync(tmp)) {
+				fs.readdir(tmp, (err, files) => {
+					files.forEach(file => {
+						fs.unlinkSync(path.join(tmp, file));
+					});
+					fs.rmdirSync(tmp);
+					resolve();
+				})
+			}
+			resolve();
+		});
 
 	}
 
 	// log any errors that occur
 	form.on('error', (err) => {
-		console.log('An error has occured: \n' + err);
+		removeTmp()
+			.then(() => {
+				if (typeof err === 'string') {
+					err = new Error('An error has occured: \n' + err);
+				}
+				next(err);
+			});
 	});
-
-	// once all the files have been uploaded, send a response to the client
-	form.on('end', () => {
-		res.end('success');
-	});
-
-	// parse the incoming request containing the form data
-	form.parse(req);
 
 });
 

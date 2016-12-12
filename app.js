@@ -1,7 +1,9 @@
-const express = require('express'), 
+const
+	express = require('express'), 
 	app = express(),
 	path = require('path'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	errorHandler = require('./middlewares/error');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -14,11 +16,11 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Common middlewares
-app.use(require('./middlewares/render'));
-
 // App logic
 app.use(require('./controllers'));
+
+// Error middleware
+app.use(errorHandler);
 
 app.listen(app.get('port'), () => {
   console.log('Listening on port ' + app.get('port'))

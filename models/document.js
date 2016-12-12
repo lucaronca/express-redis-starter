@@ -92,26 +92,45 @@ exports.get = function(id, cb) {
 // Get all documents
 exports.all = function(cb) {
 
-	client.lrange('documents', 0, -1, function(err, documents){
+	client.lrange('document:keys', 0, -1, function(err, documents){
 
-		errorHandler(err);
+		if (err) return cb(err);
 
-		cb(null, documents);
+		if (!documents || (Array.isArray(documents) && !documents.length)) {
+
+			err = new Error('Empty list');
+
+			return cb(err);
+
+		}
+
+		let actions = documents.map(getDocData);
+
+		let results = Promise.all(actions);
+
+		results
+			.then((data) => cb(null, data))
+			.catch((err) => cb(err));
+
 
 	});
 
 }
 
-function errorHandler(err) {
+function getDocData(key) {
 
-	if (err) {
-		console.error('error in create model');
-		throw new Error(err);
-	}
+	return new Promise((resolve, reject) => {
+
+		client.get( key, ( err, resp ) => {
+
+			if (err) reject(err);
+
+			resolve(JSON.parse(resp));
+
+		});
+
+	});
 
 }
 
-// Get all comments by a particular user
-exports.allByUser = function(user, cb) {
-  cb(null, [])
-}
+exports.getDocData = getDocData;

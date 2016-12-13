@@ -3,12 +3,11 @@ const
 	router = express.Router(),
 	Document = require('../models/document');
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
 
 	Document.all((err, data) => {
 
-		console.log(err);
-		console.log(data);
+		if (err) return next(err);
 
 	});
 

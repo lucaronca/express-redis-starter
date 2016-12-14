@@ -42,6 +42,15 @@ h1 {
     width: 0%;
 }
 
+i {
+  &.large {
+    font-size: 50px;
+  }
+  &.medium {
+    font-size: 35px;
+  }
+}
+
 /* Footer */
 
 .full-width {

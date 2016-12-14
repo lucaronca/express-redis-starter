@@ -16,7 +16,7 @@ $(document).ready(function() {
       $(elem).parents('fieldset').find('.form-error').hide();
     });
 
-  // stop default form submit
+  // stop default form submit and handle it with zf adibe
   form
     .bind('submit', function(e) {
       e.preventDefault();

@@ -10,55 +10,86 @@
 	</head>
 
 	<body class="upload-page">
-		<div class="row">
-			<div class="columns xsmall-12 text-center">
-				<div class="panel">
-					<i class="fi-upload-cloud large"></i>
-					<h2>Document upload</h2>
-					<label for="progress"></label>
-					<div class="progress">
-						<span class="meter"></span>
+
+		<form id="upload-form" data-abide novalidate>
+			<div class="row">
+				<div class="xsmall-12 columns text-center">
+					<div class="panel">
+						<i class="fi-upload-cloud large"></i>
+						<h2>Document upload</h2>
+						<label for="progress"></label>
+						<div class="progress">
+							<span class="meter"></span>
+						</div>
+						<a href="#" class="button upload-btn">Upload File</a>
+						<input id="upload-input" style="display: none;" type="file" name="uploads" multiple="multiple">
+						<p class="help-text">Once you have compiled all the required files you can upload files</p>
 					</div>
-					<a href="#" class="button upload-btn">Upload File</a>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="xsmall-12 large-12 columns name">
-				<label>Name
-					<input type="text" placeholder="Insert document name" />
-				</label>
+			<!-- Error message -->
+			<div class="row">
+				<div class="xsmall-12 columns text-center">
+					<div data-abide-error class="alert callout" style="display: none;">
+						<p><i class="fi-alert"></i> Plese compile all the required fields</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="xsmall-12 large-6 columns month">
-				<label>Select Month
-					<select>
-						<option value="01">Jenuary</option>
-						<option value="02">February</option>
-						<option value="03">March</option>
-						<option value="04">April</option>
-						<option value="05">May</option>
-						<option value="06">June</option>
-						<option value="07">July</option>
-						<option value="08">August</option>
-						<option value="09">September</option>
-						<option value="10">October</option>
-						<option value="11">November</option>
-						<option value="12">December</option>
-					</select>
-				</label>
+			<!-- Fields -->
+			<div class="row">
+				<fieldset class="xsmall-12 large-12 columns name">
+					<label>Title
+						<input type="text" placeholder="Insert document title" required />
+					</label>
+					<span class="form-error">
+						Please give your document a title
+					</span>
+				</fieldset>
 			</div>
-			<div class="xsmall-12 large-6 columns year">
-				<label>Year
-					<input type="text" placeholder="Insert document year" />
-				</label>
+			<div class="row">
+				<fieldset class="xsmall-12 large-6 columns month">
+					<label>Select Month
+						<select required>
+							<option value=""></option>
+							<option value="01">Jenuary</option>
+							<option value="02">February</option>
+							<option value="03">March</option>
+							<option value="04">April</option>
+							<option value="05">May</option>
+							<option value="06">June</option>
+							<option value="07">July</option>
+							<option value="08">August</option>
+							<option value="09">September</option>
+							<option value="10">October</option>
+							<option value="11">November</option>
+							<option value="12">December</option>
+						</select>
+					</label>
+					<span class="form-error">
+						Select the document month
+					</span>
+				</fieldset>
+				<fieldset class="xsmall-12 large-6 columns year">
+					<label>Year
+						<input type="text" placeholder="Insert document year" required pattern="number" />
+					</label>
+					<span class="form-error">
+						Insert the document year
+					</span>
+				</fieldset>
 			</div>
-		</div>
-		</div>
+			<div class="row">
+				<fieldset class="xsmall-12 large-12 columns description">
+					<label>Description
+        				<textarea placeholder="Give a simple description of the document contents here" rows="6"></textarea>
+					</label>
+					<span class="form-error">
+						Please give your document a title
+					</span>
+				</fieldset>
+			</div>
+		</form>
 
-		<input id="upload-input" style="display: none;" type="file" name="uploads[]" multiple="multiple"></br>
-		
 		<% include ../partials/footer %>
 
 	</body>

@@ -1,10 +1,36 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-  $('.upload-btn').on('click', function (){
+  $(this).foundation();
+
+  var form = $("#upload-form");
+
+  $('.upload-btn').on('click', function() {
+    form.foundation('validateForm');
+  });
+
+  $(this)
+    .bind('invalid.zf.abide', function(ev, elem) {
+      $(elem).parents('fieldset').find('.form-error').show();
+    })
+    .bind('valid.zf.abide', function(ev, elem) {
+      $(elem).parents('fieldset').find('.form-error').hide();
+    });
+
+  // stop default form submit
+  form
+    .bind('submit', function(e) {
+      e.preventDefault();
+      console.log('submit intercepted');
+      return false;
+    })
+    .bind('forminvalid.zf.abide', function(e,elem) {
+      console.log('form is invalid');
+    })
+    .bind('formvalid.zf.abide', function(e,elem) {
       $('#upload-input').click();
       $('label[for="progress"]').text('0%');
-      $('.progress .meter').width('0%');
-  });
+      $('.progress .meter').width('0%'); 
+    });
 
   $('#upload-input').on('change', function(){
 
@@ -71,5 +97,4 @@ $(document).ready(function(){
   });
   
 });
-
 

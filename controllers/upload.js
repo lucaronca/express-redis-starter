@@ -93,7 +93,9 @@ router.post('/send', (req, res, next) => {
 
 		return new Promise((resolve, reject) => {
 
-			Document.create(data.name, { month: data.month, year: data.year }, (err, result) => {
+			let desc = data.description || 'This document has no description';
+
+			Document.create(data.title, desc, { month: data.month, year: data.year }, (err, result) => {
 
 				if (err) reject(err);
 

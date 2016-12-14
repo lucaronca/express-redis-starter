@@ -49,9 +49,10 @@ $(document).ready(function() {
         formData.append('uploads', file, file.name);
 
         // adding other fields to formData
-        formData.append('name', $('.name input').val());
+        formData.append('title', $('.title input').val());
         formData.append('month', $('.month select').val());
         formData.append('year', $('.year input').val());
+        formData.append('description', $('.description textarea').val());
 
       }
 

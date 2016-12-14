@@ -34,11 +34,12 @@ router.post('/send', (req, res, next) => {
 
     	if (err) return next(err);
 
-    	// get uploads array either is a single file type
+    	// get uploads array either is a single file
     	let uploads = (Array.isArray(files.uploads)) ?
     		files.uploads :
     		new Array(files.uploads);
 
+		// process every document attached, with request fields
 		let uploadsP = uploads.map((file) => {
 
 			return processDocumentInEntry(file, fields);
@@ -76,6 +77,7 @@ router.post('/send', (req, res, next) => {
 
 	}
 
+	// check file data type if is pdf
     function checkType(file) {
 
     	return (file.type === "application/pdf") ?
@@ -86,6 +88,7 @@ router.post('/send', (req, res, next) => {
 
     }
 
+    // passing form data to Document model
 	function setFileData(data) {
 
 		return new Promise((resolve, reject) => {
@@ -102,11 +105,11 @@ router.post('/send', (req, res, next) => {
 
 	}
 
+	// rename file with unique key value received and place it in the uploads folder
 	function handleFile(file, name) {
 
 		return new Promise((resolve, reject) => {
 
-			// rename file with unique key value and place it in the uploads folder
 			let destFolder = path.join(form.uploadDir, '../');
 			let destFilePath = path.join( destFolder, name + '.pdf' );
 			fs.rename(file.path, destFilePath, err => {
@@ -121,10 +124,10 @@ router.post('/send', (req, res, next) => {
 
 	}
 
+	// remove tmp directory and all temporary files
 	function removeTmp(targetPath) {
 
 		return new Promise(resolve => {
-			// remove tmp directory and all temporary files
 			let tmp = (targetPath) ?
 				path.normalize(targetPath  + '/tmp') :
 				path.join(__dirname, '../uploads/tmp');

@@ -6,17 +6,7 @@ let gen = new KeyGenerator(12);
 
 
 // Create new document in database and return its id
-exports.create = (title, desc, date, cb) => {
-
-	//@TODO check if content is buffer, create id
-
-	let data = {
-		title,
-		month: date.month,
-		year: date.year,
-		desc,
-		actualDate: new Date().toString()
-	};
+exports.create = (data, cb) => {
 
 	let key = gen.create();
 

@@ -95,7 +95,11 @@ router.post('/send', (req, res, next) => {
 
 			let desc = data.description || 'This document has no description';
 
-			Document.create(data.title, desc, { month: data.month, year: data.year }, (err, result) => {
+			delete data.description;
+			data.desc = desc;
+			data.actualDate = new Date().toString();
+
+			Document.create(data, (err, result) => {
 
 				if (err) reject(err);
 

@@ -29,7 +29,7 @@
 		<div class="row">
 			<a href="/?reverse=<%= !reversed %>">Invert order</a>
 		</div>
-		
+
 		<% data.forEach((doc) => { %>
 
 		<div class="row">
@@ -38,12 +38,21 @@
 
 				<div class="header panel">
 					<div class="sign">
-						<h2><%= doc.title %></h2>
+						<p class="date"><%= doc.month %> - <%= doc.year %></hp>
 					</div>
-					<p>
-						<span><%= doc.month %> - <%= doc.year %></span>
-						<%= doc.desc %>
-					</p>
+					<div class="row">
+						<div class="small-12 columns">
+							<h2><%= doc.title %></h2>
+							<p>
+								<%= doc.desc %>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-8 columns buttons">
+							<a class="small button" href="/docs/<%= doc.key %>.pdf">View document</a>
+						</div>
+					</div>
 				</div>
 
 			</div>

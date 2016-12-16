@@ -80,6 +80,28 @@ i.medium {
   border: 2px solid #444;
   background: #fff;
   color: #333; }
+  .home .header.panel h2 {
+    font: 2rem "Avenir Next";
+    text-transform: capitalize;
+    margin: -1.15rem 2rem 1.5rem 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #16222A; }
+  .home .header.panel .sign {
+    background: #fff;
+    width: 150px;
+    height: 2.4rem;
+    border: 2px solid #444;
+    position: relative;
+    top: -2.5rem;
+    margin: auto; }
+    .home .header.panel .sign p.date {
+      text-transform: uppercase;
+      font: bolder 0.875rem "Avenir Next";
+      letter-spacing: 3px;
+      color: #666;
+      font-size: 70%;
+      text-align: center;
+      line-height: 2.5rem; }
   .home .header.panel p {
     font: 1rem "Avenir Next";
     padding: 1rem 2rem 2rem 2rem;
@@ -89,22 +111,8 @@ i.medium {
       letter-spacing: 1px;
       font-size: 75%;
       font-weight: bold; }
-  .home .header.panel .sign {
-    background: #fff;
-    width: 150px;
-    height: 2.4rem;
-    border: 2px solid #444;
-    position: relative;
-    top: -2.5rem;
-    margin: auto; }
-    .home .header.panel .sign h2 {
-      text-transform: uppercase;
-      font: bolder 0.875rem "Avenir Next";
-      letter-spacing: 3px;
-      color: #666;
-      font-size: 70%;
-      text-align: center;
-      line-height: 2rem; }
+  .home .header.panel .buttons a {
+    margin-left: 2rem; }
 
 /* Upload page */
 .upload-page .panel {

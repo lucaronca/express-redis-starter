@@ -111,6 +111,35 @@ $text-color: #fff;
     border: 2px solid #444;
     background: #fff;
     color: #333;
+
+    h2 {
+    font: 2rem "Avenir Next";
+    text-transform: capitalize;
+    margin: -1.15rem 2rem 1.5rem 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #16222A;
+    }
+
+    .sign {
+      background:#fff;
+      width: 150px;
+      height: 2.4rem;
+      border: 2px solid #444;
+      position: relative;
+      top: -2.5rem;
+      margin: auto;
+      
+      p.date {
+        text-transform: uppercase;
+        font: bolder 0.875rem "Avenir Next";
+        letter-spacing: 3px;
+        color: #666;
+        font-size: 70%;
+        text-align: center;
+        line-height: 2.5rem;
+      }
+
+    }
     
     p {
       font: 1rem "Avenir Next";
@@ -124,26 +153,15 @@ $text-color: #fff;
         font-weight: bold;
       }
     }
-    
-    .sign {
-      background:#fff;
-      width: 150px;
-      height: 2.4rem;
-      border: 2px solid #444;
-      position: relative;
-      top: -2.5rem;
-      margin: auto;
-      
-      h2 {
-        text-transform: uppercase;
-        font: bolder 0.875rem "Avenir Next";
-        letter-spacing: 3px;
-        color: #666;
-        font-size: 70%;
-        text-align: center;
-        line-height: 2rem;
+
+    .buttons {
+
+      a {
+        margin-left: 2rem;
       }
+
     }
+
   }
 
 }

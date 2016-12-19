@@ -16,15 +16,19 @@
 		</div>
 
 	<%if (!data.length) { %>
+
 		<div class="row">
 
 			<div class="small-8 medium-6 large-5 small-centered columns">
-				<h2>No documents</h2>
+				<div class="callout alert">
+					<h5>No documents</h5>
+					<p>There aren't yet documents saved in the db</p>
+				</div>
 			</div>
 
 		</div>
-	<%
-	} else { %>
+
+	<%} else { %>
 
 		<div class="row">
 			<a href="/?reverse=<%= !reversed %>">Invert order</a>

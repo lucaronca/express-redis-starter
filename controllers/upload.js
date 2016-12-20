@@ -19,6 +19,13 @@ router.post('/send', (req, res, next) => {
 	// specify that we want to allow the user to upload multiple files in a single request
 	form.multiples = true;
 
+	// create uploads folder if not exists
+	let uploads = path.join(__dirname, '../uploads');
+
+	if (!fs.existsSync(uploads)) {
+		fs.mkdirSync(uploads);
+	}
+
 	// create temporary directory to store uploaded file
 	let tmp = path.join(__dirname, '../uploads/tmp');
 

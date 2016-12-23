@@ -1,5 +1,5 @@
 // Unique key generator module
-// Pass a parameter to the construnctor or the create method to specify the length of the key
+// Pass a parameter to the constructor or the create method to specify the length of the key
 
 class keyGenerator {
 
@@ -11,11 +11,11 @@ class keyGenerator {
 
 	create(length = this.length) {
 
-		var ret = "";
-		while (ret.length < length) {
-			ret += Math.random().toString(16).substring(2);
+		let res = '';
+		while (res.length < length) {
+			res += Math.random().toString(16).substring(2);
 		}
-		return ret.toString(0, length);
+		return res.toString(0, length);
 
 	}
 

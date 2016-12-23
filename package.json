@@ -6,12 +6,14 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack && node app.js",
+    "build": "webpack --env build",
     "test": "node_modules/.bin/mocha tests/**"
   },
   "keywords": [
     "project",
     "node",
     "express",
+    "webpack",
     "structure"
   ],
   "author": "Luca Ronca",
@@ -30,15 +32,18 @@
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
+    "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.1",
-    "file-loader": "^0.9.0",
+    "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "gh-pages": "^0.12.0",
     "mocha": "^2.2.4",
     "node-sass": "^4.1.1",
-    "nodemon": "^1.11.0",
-    "sass-loader": "^4.1.0",
+    "purifycss-webpack-plugin": "^2.0.3",
+    "sass-loader": "^4.1.1",
     "should": "^6.0.1",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.14.0"
+    "webpack": "^2.2.0-rc.2",
+    "webpack-dev-server": "2.1.0-beta.12",
+    "webpack-merge": "^1.1.1"
   }
 }

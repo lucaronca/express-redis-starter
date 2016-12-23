@@ -1,16 +1,16 @@
-// Import foudation core
+// Import foudation module
 @import '~foundation-sites/scss/foundation';
 
 // Require all foundation components
 @include foundation-everything;
 
-@font-face {
-  font-family: 'Proxima Novalight';
-  src: url('./fonts/proximanovalight.eot'); /* IE9 Compat Modes */
-  src: url('./fonts/proximanovalight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('./fonts/proximanovalight.woff') format('woff'), /* Pretty Modern Browsers */
-       url('./fonts/proximanovalight.ttf')  format('truetype'), /* Safari, Android, iOS */
-}
+//@font-face {
+//  font-family: 'Proxima Novalight';
+//  src: url('../commons/fonts/proximanovalight.eot'); /* IE9 Compat Modes */
+//  src: url('../commons/fonts/proximanovalight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+//       url('../commons/fonts/proximanovalight.woff') format('woff'), /* Pretty Modern Browsers */
+//       url('../commons/fonts/proximanovalight.ttf')  format('truetype'), /* Safari, Android, iOS */
+//}
 
 html,
 body {
@@ -69,7 +69,7 @@ i {
 
 $text-color: #fff;
 
-// footer CSS
+// footer
 
 .footer {
   padding: 2rem 4rem;
@@ -78,9 +78,6 @@ $text-color: #fff;
   i {
     font-size: 100px;
   }
-}
-
-.footer {
   h4 {
     color: $text-color;
     font-size: 1em;
@@ -110,79 +107,4 @@ $text-color: #fff;
   li {
     margin-top: .5em;
   }
-}
-
-/* Home page */
-
-.home {
-
-  .header.panel {
-    margin: 3rem auto;
-    border: 2px solid #444;
-    background: #fff;
-    color: #333;
-
-    h2 {
-    font: 2rem "Avenir Next";
-    text-transform: capitalize;
-    margin: -1.15rem 2rem 1.5rem 2rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #16222A;
-    }
-
-    .sign {
-      background:#fff;
-      width: 150px;
-      height: 2.4rem;
-      border: 2px solid #444;
-      position: relative;
-      top: -2.5rem;
-      margin: auto;
-      
-      p.date {
-        text-transform: uppercase;
-        font: bolder 0.875rem "Avenir Next";
-        letter-spacing: 3px;
-        color: #666;
-        font-size: 70%;
-        text-align: center;
-        line-height: 2.5rem;
-      }
-
-    }
-    
-    p {
-      font: 1rem "Avenir Next";
-      padding: 1rem 2rem 2rem 2rem;
-      margin-top: -1.25rem;
-      
-      span {
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 75%;
-        font-weight: bold;
-      }
-    }
-
-    .buttons {
-
-      a {
-        margin-left: 2rem;
-      }
-
-    }
-
-  }
-
-}
-
-
-/* Upload page */
-
-.upload-page {
-
-  .panel {
-    background: #fff;
-  }
-
 }

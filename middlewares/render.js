@@ -1,8 +1,10 @@
+// common global variables added to every view
 const path = require('path');
 
 module.exports = function(req, res, next) {
 
-    res.locals.staticBasePath = path.join(path.dirname(require.main.filename), '/public');
+	//view name
+    res.locals.staticBasePath = req.path.split('/')[1] || 'home';
     next();
 
 };

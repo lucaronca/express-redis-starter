@@ -12,7 +12,7 @@ exports.create = (data, cb) => {
 
 	function storeDocData() {
 
-		client.set( key, JSON.stringify(data), ( err, resp ) => {
+		client.set( key, JSON.stringify(data), ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -24,7 +24,7 @@ exports.create = (data, cb) => {
 
 	function setYear() {
 
-		client.lpush( data.year, key, ( err, resp ) => {
+		client.lpush( data.year, key, ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -36,7 +36,7 @@ exports.create = (data, cb) => {
 
 	function setMonth() {
 
-		client.lpush( data.month, key, ( err, resp ) => {
+		client.lpush( data.month, key, ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -48,7 +48,7 @@ exports.create = (data, cb) => {
 
 	function pushKeysList() {
 
-		client.lpush( 'document:keys', key, ( err, resp ) => {
+		client.lpush( 'document:keys', key, ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -73,12 +73,12 @@ exports.create = (data, cb) => {
 
 		});
 
-}
+};
 
 // Get a particular comment
 exports.get = function(id, cb) {
   cb(null, {id:id, text: 'Very nice example'})
-}
+};
 
 // Get all documents
 exports.all = function(cb) {
@@ -106,7 +106,7 @@ exports.all = function(cb) {
 
 	});
 
-}
+};
 
 function getDocData(key) {
 

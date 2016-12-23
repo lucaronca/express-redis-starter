@@ -8,13 +8,13 @@ const
 
 
 router.get('/', (req, res) => {
-	res.render('pages/upload');
-})
+	res.render('pages/upload', { webpackbundle: 'upload' });
+});
 
 router.post('/send', (req, res, next) => {
 
 	// create an incoming form object
-	var form = new formidable.IncomingForm();
+	let form = new formidable.IncomingForm();
 
 	// specify that we want to allow the user to upload multiple files in a single request
 	form.multiples = true;
@@ -42,6 +42,7 @@ router.post('/send', (req, res, next) => {
     	if (err) return next(err);
 
     	// get uploads array either is a single file
+		if (!files.uploads) next(new Error('Error in form parsing: missing \'uploads\' field'));
     	let uploads = (Array.isArray(files.uploads)) ?
     		files.uploads :
     		new Array(files.uploads);

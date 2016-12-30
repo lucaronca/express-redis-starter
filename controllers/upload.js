@@ -8,7 +8,7 @@ const
 
 
 router.get('/', (req, res) => {
-	res.render('pages/upload', { webpackbundle: 'upload' });
+	res.render('pages/upload');
 });
 
 router.post('/send', (req, res, next) => {

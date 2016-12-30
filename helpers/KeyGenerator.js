@@ -1,7 +1,7 @@
-// Unique key generator module
-// Pass a parameter to the constructor or the create method to specify the length of the key
+/* Unique key generator module
+	Pass a parameter to the constructor or the create method to specify the length of the key */
 
-class keyGenerator {
+class KeyGenerator {
 
 	constructor(length = 10) {
 
@@ -21,4 +21,4 @@ class keyGenerator {
 
 }
 
-module.exports = keyGenerator;
+module.exports = KeyGenerator;

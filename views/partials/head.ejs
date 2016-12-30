@@ -3,9 +3,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Doc Manager App</title>
-	
-	<link href="public/<%= webpackbundle %>.css" rel="stylesheet" type="text/css">
-	
-	<!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->
 
-	<script src="public/bundle.<%= webpackbundle %>.js"></script>
+	<%
+ 		for (let ext in assets) {
+ 		    if (ext === 'css') {
+ 		        assets[ext].forEach((asset) => {
+					%><link href="build/<%= asset %>" rel="stylesheet" type="text/css"><%
+				});
+			}
+			if (ext === 'js') {
+				assets[ext].forEach((asset) => {
+					%><script src="build/<%= asset %>"></script><%
+				});
+			}
+		}
+ 	%>
+
+	<!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->

@@ -1,19 +1,12 @@
 // jQuery
-const $ = require('jquery');
-global.jQuery = $;
+//const $ = require('jquery');
 
-// Foundation
-require('foundation-sites/js/foundation.core');
-require('foundation-sites/js/foundation.util.mediaQuery');
-require('foundation-sites/js/foundation.abide');
+// Foundation - uncomment if necessary
+//require('foundation-sites/js/foundation.core');
 
 //Foundation icons
 //require('foundation-icons/foundation-icons.scss');
 
-// Section styles
-require('./styles.scss');
-
 $(document).ready(function() {
-
+    console.log('homepage');
 });
-

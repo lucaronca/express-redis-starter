@@ -3,15 +3,24 @@ const
 	app = express(),
 	path = require('path'),
 	bodyParser = require('body-parser'),
-	errorHandler = require('./middlewares/error');
+	webpack = require('webpack');
+
+let env = process.env.NODE_ENV || 'development';
 
 app.set('port', (process.env.PORT || 5000));
+
+// Middleware
+// Handling webpack's assets including in templates
+app.use(require('./middlewares/commonRender'));
+// Error middleware
+app.use(require('./middlewares/error'));
 
 // View Engine
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
-app.use('/public', express.static(path.join(__dirname, '/public')));
+// public paths
+app.use('/build', express.static(path.join(__dirname, '/public/build')));
 app.use('/docs', express.static(path.join(__dirname, '/uploads')));
 
 app.use(bodyParser.json());
@@ -20,9 +29,25 @@ app.use(bodyParser.urlencoded({extended: true}));
 // App logic
 app.use(require('./controllers'));
 
-// Error middleware
-app.use(errorHandler);
+// start webpack
+if (env === 'production') {
+    let compiler = webpack(require('./webpack.config')(env));
+    compiler.apply(new webpack.ProgressPlugin());
 
-app.listen(app.get('port'), () => {
-  console.log('Listening on port ' + app.get('port'))
-});
+    compiler.run((err, stats) => {
+
+        if (err) next(err);
+
+        // get the list of built assets
+        let assets = stats.toJson().assets;
+
+        //set the list globally
+        app.set('assets', assets);
+
+        // once the assets' name are resolved, start the app
+        app.listen(app.get('port'), () => {
+            console.log('Listening on port ' + app.get('port'))
+        });
+
+    });
+}

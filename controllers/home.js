@@ -1,6 +1,7 @@
 const
 	express = require('express'),
 	router = express.Router(),
+	Assets = require('../helpers/Assets'),
 	Document = require('../models/document');
 
 router.get('/', (req, res, next) => {
@@ -9,12 +10,12 @@ router.get('/', (req, res, next) => {
 
 		if (err) return next(err);
 
-		// change documets display order
+		// change documents display order
 		let reverse = (req.query.reverse === 'true') ;
 
 		if (reverse) data.reverse();
 
-		res.render('pages/home', { data, webpackbundle: 'home', reversed: reverse });
+		res.render('pages/home', { data, reversed: reverse });
 
 	});
 

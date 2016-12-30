@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+//const PurifyCSSPlugin = require('purifycss-webpack-plugin');
 
 exports.devServer = function(options) {
     return {
@@ -40,23 +40,23 @@ exports.devServer = function(options) {
     };
 };
 
-exports.setupStyles = function (paths) {
+exports.setupStyles = function () {
 
     return {
         module: {
             rules: [
                 {
                     test: /\.css$/,
-                    loader: ExtractTextPlugin.extract('css-loader?minimize&sourceMap')
+                    loader: ExtractTextPlugin.extract('css-loader?&sourceMap')
                 },
                 {
                     test: /\.scss$/,
-                    loader: ExtractTextPlugin.extract(['css-loader?minimize&sourceMap','sass-loader?minimize&sourceMap'])
+                    loader: ExtractTextPlugin.extract(['css-loader?&sourceMap','sass-loader?&sourceMap'])
                 }
             ]
         },
         plugins: [
-            new ExtractTextPlugin('styles.bundle.css')
+            new ExtractTextPlugin({ filename: '[name].styles.[chunkhash].css', allChunks: true })
         ]
     }
 
@@ -69,10 +69,12 @@ exports.setupScripts = function () {
             rules: [
                 {
                     test: /\.js$/,
-                    use: 'babel-loader',
                     exclude: [/node_modules/],
-                    query: {
-                        presets: 'es2015',
+                    use: {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: 'es2015'
+                        }
                     }
                 }
             ]
@@ -81,14 +83,13 @@ exports.setupScripts = function () {
 
 };
 
-exports.setupCSS = function(paths) {
+exports.setupCSS = function() {
     return {
         module: {
             rules: [
                 {
                     test: /\.css$/,
-                    use: ['style-loader', 'css-loader'],
-                    include: paths
+                    use: ['style-loader', 'css-loader']
                 }
             ]
         }
@@ -129,7 +130,10 @@ exports.extractBundle = function(options) {
             // Extract bundle and manifest files. Manifest is
             // needed for reliable caching.
             new webpack.optimize.CommonsChunkPlugin({
-                names: [options.name, 'manifest']
+                names: [options.name, 'manifest'],
+                minChunks: Infinity,
+                // (with more entries, this ensures that no other module
+                //  goes into the vendor chunk)
             })
         ]
     };

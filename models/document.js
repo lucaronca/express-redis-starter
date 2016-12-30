@@ -1,6 +1,6 @@
 const
 	client = require('../db.js'),
-	KeyGenerator = require('../helpers/keys');
+	KeyGenerator = require('../helpers/KeyGenerator');
 
 let gen = new KeyGenerator(12);
 

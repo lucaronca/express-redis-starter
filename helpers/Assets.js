@@ -64,6 +64,9 @@ class Assets {
         this.config.removeScripts.forEach((scriptName) => {
 
             let index = list.findIndex((asset) => {
+            /* remove commons.js asset
+            is built default by webpack but is useless for us at the moment */
+            return (path.extname(asset) === '.js' && asset.indexOf(scriptName) !== -1);
 
                 /* remove js assets built by default by webpack but useless for us */
                 return (path.extname(asset) === '.js' && asset.indexOf(scriptName) !== -1);

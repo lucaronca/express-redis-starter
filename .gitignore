@@ -3,8 +3,4 @@ node_modules
 # Saved files #
 uploads
 # Built assets #
-<<<<<<< HEAD
 public/build
-=======
-public/build
->>>>>>> 03430bffe25aa75f4e482a308dc35abe8a4d9dc9

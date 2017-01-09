@@ -1,84 +1,91 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const parts = require('./webpack.parts');
+'use strict';
+
+const path = require('path'),
+    webpack = require('webpack'),
+    merge = require('webpack-merge'),
+    CleanWebpackPlugin = require('clean-webpack-plugin'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const PATHS = {
-    scripts: {
-        home: path.join(__dirname, 'public', 'app', 'home'),
-        upload: path.join(__dirname, 'public', 'app', 'upload')
-    },
-    styles: {
-        home:  path.join(__dirname, 'public', 'app', 'home', 'styles.scss'),
-        upload: path.join(__dirname, 'public', 'app', 'upload', 'styles.scss'),
-        commons: path.join(__dirname, 'public', 'app', 'commons', 'styles.scss')
-    },
-    vendor: ['jquery', 'foundation-sites'],
-    build: path.join(__dirname, 'public', 'build')
-};
+  build: path.join(__dirname, 'public', 'build')
+}
 
-const common = {
-    entry: {
-        home: [PATHS.scripts.home, PATHS.styles.home],
-        upload: [PATHS.scripts.upload, PATHS.styles.upload],
-        // app's common shared parts, for the moment just styles
-        commons: PATHS.styles.commons
-    },
-    output: {
-        path: PATHS.build,
-    },
-    stats: {
-        // Nice colored output
-        colors: true
+let plugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: 2
+  }),
+  /*new webpack.LoaderOptionsPlugin({
+    options: {
+      sassLoader: {
+        sourceMaps: true,
+        includePaths: [path.resolve(__dirname, './node_modules')]
+      }
     }
-};
+  }),*/
+  new webpack.ProvidePlugin({
+    $: path.join(__dirname, 'node_modules', 'jquery/dist/jquery'),
+    jQuery: path.join(__dirname, 'node_modules', 'jquery/dist/jquery')
+  }),
+  new ExtractTextPlugin({ filename: '[name].styles.[chunkhash].css', allChunks: true }),
+  new CleanWebpackPlugin([PATHS.build], {
+    // Without `root` CleanWebpackPlugin won't point to our
+    // project and will fail to work.
+    root: process.cwd()
+  })
+];
 
 module.exports = function(env) {
-    if (env === 'production') {
-        return merge(
-            common,
-            {
-                devtool: 'source-map',
-                output: {
-                    // This is used for code splitting. The setup
-                    // will work without but this is useful to set.
-                    chunkFilename: '[chunkhash].js',
-                    publicPath: '/public/',
-                    // Production file name
-                    filename: '[name].[chunkhash].js'
-                }
-            },
-            parts.clean(PATHS.build),
-            parts.setFreeVariable(
-                'process.env.NODE_ENV',
-                'production'
-            ),
-            parts.extractBundle({
-                entries: PATHS.vendor,
-                name: 'vendor'
-            }),
-            parts.setupStyles(),
-            parts.setupScripts()
-            //parts.minify()
-            //parts.extractCSS(PATHS.style),
-            //parts.purifyCSS([PATHS.app])
-        );
-    }
-
-    return merge(
-        common,
-        {
-            devtool: 'eval-source-map',
-            // Disable performance hints during development
-            performance: {
-                hints: false
-            }
-        },
-        parts.setupCSS(PATHS.style),
-        parts.devServer({
-            // Customize host/port here if needed
-            host: process.env.HOST,
-            port: process.env.PORT
-        })
-    );
+  if (env === 'production') {
+    return merge({
+      context: path.join(__dirname, 'public', 'app'),
+      entry: {
+        vendor: ['jquery', 'foundation-sites'],
+        home: ['./home/index.js', './home/styles.scss'],
+        upload: ['./upload/index.js', './upload/styles.scss'],
+        commonStyles: './commons/styles.scss'
+      },
+      output: {
+        path: PATHS.build,
+        filename: '[name].bundle.[chunkhash].js',
+        chunkFilename: '[name].chunk.[chunkhash].js'
+      },
+      /*resolve: {
+        alias: {
+          'foundation-sites': path.join(__dirname, 'node_modules', 'foundation-sites', 'scss', 'foundation.scss')
+        }
+      },*/
+      module: {
+        noParse: /node_modules\/foundation-sites/,
+        loaders: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader'
+          },
+          {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract({
+              fallbackLoader: 'style-loader',
+              loader: [
+                'css-loader?sourceMap',
+                'sass-loader?sourceMap&' +
+                'includePaths[]=' + path.resolve(__dirname, './node_modules')
+              ]
+            })
+          },
+          { 
+            test: /\.otf$|\.eot$|\.svg$|\.woff2?$|\.ttf$/,
+            loader: 'file-loader?name=[path][name].[ext]' 
+          }
+        ]
+      },
+      plugins: plugins,
+      devtool: 'source-map',
+      stats: {
+        // Nice colored output
+        colors: true
+      }
+    });
+  }
 };

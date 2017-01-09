@@ -3,11 +3,23 @@
 
 const path = require('path');
 
+let config = {
+    requiredAssets: [
+        'commonStyles',
+        'vendor'
+    ],
+    requiredOrder: {
+        js: ['vendor'],
+        css: ['commonStyles']
+    }
+};
+
 class Assets {
 
     constructor(req, viewName) {
         this.assetsList = req.app.get('assets');
         this.viewName = viewName;
+        this.config = config;
     }
 
     filterByViewName() {
@@ -17,7 +29,11 @@ class Assets {
         this.assetsList.forEach((asset) => {
             let testName = function(name) {
                 // view name and other required assets
-                return (name === 'commons' || name === 'vendor' || name === 'manifest' || name === this.viewName);
+                let isRequiredAsset;
+                this.config.requiredAssets.forEach((assetName) => {
+                    if (name === assetName) isRequiredAsset = true;
+                });
+                return ((name === this.viewName) || isRequiredAsset);
             }.bind(this);
             if (path.extname(asset.name) !== '.map' && asset.chunkNames.find(testName))
                 results.push(asset.name);
@@ -48,7 +64,7 @@ class Assets {
 
             /* remove commons.js asset
             is built default by webpack but is useless for us at the moment */
-            return (path.extname(asset) === '.js' && asset.indexOf('commons') !== -1);
+            return (path.extname(asset) === '.js' && asset.indexOf('commonStyles') !== -1);
 
         });
 
@@ -80,9 +96,13 @@ class Assets {
             });
         };
 
-        filteredObj.js.sortByName('manifest', 0);
-        filteredObj.js.sortByName('vendor', 1);
-        filteredObj.css.sortByName('commons', 0);
+        for ( let ext in this.config.requiredOrder ) {
+
+            this.config.requiredOrder[ext].forEach((assetName, i)=> {
+                filteredObj[ext].sortByName(assetName, i);
+            });
+
+        }
 
         return Promise.resolve(filteredObj);
 
@@ -92,9 +112,9 @@ class Assets {
 
         return new Promise((resolve) => {
             this.filterByViewName()
-                .then(this.customSetupFilter)
-                .then(this.filterByExt)
-                .then(this.customSort)
+                .then(this.customSetupFilter.bind(this))
+                .then(this.filterByExt.bind(this))
+                .then(this.customSort.bind(this))
                 .then((filteredObj) => {
 
                     resolve(filteredObj);

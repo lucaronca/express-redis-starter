@@ -4,13 +4,16 @@
 @import '~foundation-sites/scss/foundation';
 @include foundation-everything();
 
-//@font-face {
-//  font-family: 'Proxima Novalight';
-//  src: url('../commons/fonts/proximanovalight.eot'); /* IE9 Compat Modes */
-//  src: url('../commons/fonts/proximanovalight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-//       url('../commons/fonts/proximanovalight.woff') format('woff'), /* Pretty Modern Browsers */
-//       url('../commons/fonts/proximanovalight.ttf')  format('truetype'), /* Safari, Android, iOS */
-//}
+//Foundation icons
+@import '~foundation-icons/foundation-icons';
+
+@font-face {
+  font-family: 'Proxima Novalight';
+  src: url('../commons/fonts/proximanovalight.eot'); /* IE9 Compat Modes */
+  src: url('../commons/fonts/proximanovalight.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../commons/fonts/proximanovalight.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../commons/fonts/proximanovalight.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
 
 html,
 body {

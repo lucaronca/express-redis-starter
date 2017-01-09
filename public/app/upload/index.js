@@ -1,7 +1,7 @@
 // jQuery
 const $ = require('jquery');
 global.jQuery = $;
-console.log('aaa');
+
 // Foundation
 require('foundation-sites/js/foundation.core');
 // Foundation plugins

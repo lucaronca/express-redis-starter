@@ -5,7 +5,7 @@ const
 	bodyParser = require('body-parser'),
 	webpack = require('webpack');
 
-let env = process.env.NODE_ENV || 'development';
+let env = process.env.NODE_ENV || 'production';
 
 app.set('port', (process.env.PORT || 5000));
 

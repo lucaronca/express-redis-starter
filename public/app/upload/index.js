@@ -11,41 +11,41 @@ require('foundation-sites/js/foundation.abide');
 //Foundation icons
 //require('foundation-icons/foundation-icons.scss');
 
-$(document).ready(function() {
+$(document).ready(() => {
 
         $(this).foundation();
 
         let form = $("#upload-form");
 
-        $('.upload-btn').on('click', function() {
+        $('.upload-btn').on('click', ()=> {
             form.foundation('validateForm');
         });
 
         $(this)
-            .bind('invalid.zf.abide', function(ev, elem) {
+            .bind('invalid.zf.abide', (ev, elem) => {
                 $(elem).parents('fieldset').find('.form-error').show();
             })
-            .bind('valid.zf.abide', function(ev, elem) {
+            .bind('valid.zf.abide', (ev, elem)=> {
                 $(elem).parents('fieldset').find('.form-error').hide();
             });
 
         // stop default form submit and handle it with zf adibe
         form
-            .bind('submit', function(e) {
+            .bind('submit', (e) => {
                 e.preventDefault();
                 console.log('submit intercepted');
                 return false;
             })
-            .bind('forminvalid.zf.abide', function(e,elem) {
+            .bind('forminvalid.zf.abide', (e,elem) => {
                 console.log('form is invalid');
             })
-            .bind('formvalid.zf.abide', function(e,elem) {
+            .bind('formvalid.zf.abide', (e,elem) => {
                 $('#upload-input').click();
                 $('label[for="progress"]').text('0%');
                 $('.progress .meter').width('0%');
             });
 
-        $('#upload-input').on('change', function(){
+        $('#upload-input').on('change', () => {
 
             let files = $(this)[0].files;
 
@@ -75,15 +75,15 @@ $(document).ready(function() {
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function(data){
+                    success: (data) => {
                         console.log('upload successful!\n' + data);
                     },
-                    xhr: function() {
+                    xhr: () => {
                         // create an XMLHttpRequest
                         let xhr = new XMLHttpRequest();
 
                         // listen to the 'progress' event
-                        xhr.upload.addEventListener('progress', function(evt) {
+                        xhr.upload.addEventListener('progress', (evt) => {
 
                             if (evt.lengthComputable) {
                                 // calculate the percentage of upload completed

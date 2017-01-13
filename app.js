@@ -3,15 +3,12 @@ const
 	app = express(),
 	path = require('path'),
 	bodyParser = require('body-parser'),
-	webpack = require('webpack');
-
-let env = process.env.NODE_ENV || 'production';
+	webpack = require('webpack'),
+    webpackDevMiddleware = require('webpack-dev-middleware'),
+    webpackHotMiddleware = require('webpack-hot-middleware');
 
 app.set('port', (process.env.PORT || 5000));
 
-// Middleware
-// Handling webpack's assets including in templates
-app.use(require('./middlewares/commonRender'));
 // Error middleware
 app.use(require('./middlewares/error'));
 
@@ -30,11 +27,18 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(require('./controllers'));
 
 // start webpack
+let env = process.env.NODE_ENV || 'production';
+
+// Handling webpack's assets including in templates
+app.use(require('./middlewares/commonRender')(env));
+
+const webpackConfig = require('./webpack.config')(env);
+let compiler = webpack(webpackConfig);
+
 if (env === 'production') {
-    let compiler = webpack(require('./webpack.config')(env));
     compiler.apply(new webpack.ProgressPlugin());
 
-    compiler.run((err, stats) => {
+    return compiler.run((err, stats) => {
 
         if (err) next(err);
 
@@ -45,9 +49,30 @@ if (env === 'production') {
         app.set('assets', assets);
 
         // once the assets' name are resolved, start the app
-        app.listen(app.get('port'), () => {
-            console.log('Listening on port ' + app.get('port'))
-        });
+        startServer()
 
+    });
+}
+
+// Development
+let webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+        colors: true,
+        chunks: false, // this reduces the amount of stuff I see in my terminal; configure to your needs
+        'errors-only': true
+    }
+});
+
+app.use(webpackDevMiddlewareInstance);
+app.use(webpackHotMiddleware(compiler, {
+    log: console.log
+}));
+
+webpackDevMiddlewareInstance.waitUntilValid(startServer);
+
+function startServer() {
+    app.listen(app.get('port'), () => {
+        console.log('Listening on port ' + app.get('port'))
     });
 }

@@ -17,6 +17,15 @@
 				});
 			}
 		}
- 	%>
 
-	<!--<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>-->
+		if (!assets.hasOwnProperty('js') && !assets.hasOwnProperty('css')) {
+
+		    %>
+				<script src="/development/vendor.bundle.js"></script>
+				<script src="/development/common.bundle.js"></script>
+				<script src="/development/home.bundle.js"></script>
+			<%
+
+		}
+
+ 	%>

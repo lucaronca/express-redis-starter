@@ -10,6 +10,8 @@ module.exports = function(environment) {
         //view name
         let viewName = req.path.split('/')[1] || 'home';
 
+        res.locals.viewName = viewName;
+
         if (environment != 'production') {
             res.locals.assets = {};
             return next();

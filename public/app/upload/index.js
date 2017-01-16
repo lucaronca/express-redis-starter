@@ -17,6 +17,9 @@ $(document).ready(() => {
 
         let form = $("#upload-form");
 
+        // check if foundation plugin has been initialized on the element
+        if (!form.data('zfPlugin')) window.Foundation.reflow(form, 'abide');
+
         $('.upload-btn').on('click', ()=> {
             form.foundation('validateForm');
         });

@@ -17,21 +17,22 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 // public paths
-app.use('/build', express.static(path.join(__dirname, '/public/build')));
-app.use('/docs', express.static(path.join(__dirname, '/uploads')));
+app.use('/build', express.static(path.join(__dirname, 'public', 'build')));
+app.use('/docs', express.static(path.join(__dirname, 'uploads')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+let env = process.env.NODE_ENV || 'development';
+
+// Adding a common render
+app.use(require('./middlewares/commonRender')(env));
 
 // App logic
 app.use(require('./controllers'));
 
 // start webpack
-let env = process.env.NODE_ENV || 'production';
-
-// Handling webpack's assets including in templates
-app.use(require('./middlewares/commonRender')(env));
-
 const webpackConfig = require('./webpack.config')(env);
 let compiler = webpack(webpackConfig);
 
@@ -49,7 +50,7 @@ if (env === 'production') {
         app.set('assets', assets);
 
         // once the assets' name are resolved, start the app
-        startServer()
+        startServer();
 
     });
 }

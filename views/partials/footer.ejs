@@ -31,3 +31,22 @@
     </div>
   </div>
 </footer>
+
+<%
+
+
+if (assets.hasOwnProperty('js')) {
+
+  assets.js.forEach((asset) => {
+    %><script src="build/<%= asset %>"></script><%
+  });
+
+} else {
+    // If there aren't product compiled js assets insert development tag scripts
+  %>
+  <script src="/development/vendor.bundle.js"></script>
+  <script src="/development/common.bundle.js"></script>
+  <script src="/development/<%= viewName %>.bundle.js"></script>
+  <%
+}
+%>

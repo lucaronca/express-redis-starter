@@ -5,27 +5,11 @@
 	<title>Doc Manager App</title>
 
 	<%
- 		for (let ext in assets) {
- 		    if (ext === 'css') {
- 		        assets[ext].forEach((asset) => {
-					%><link href="build/<%= asset %>" rel="stylesheet" type="text/css"><%
-				});
-			}
-			if (ext === 'js') {
-				assets[ext].forEach((asset) => {
-					%><script src="build/<%= asset %>"></script><%
-				});
-			}
-		}
+		if (assets.hasOwnProperty('css')) {
 
-		if (!assets.hasOwnProperty('js') && !assets.hasOwnProperty('css')) {
-
-		    %>
-				<script src="/development/vendor.bundle.js"></script>
-				<script src="/development/common.bundle.js"></script>
-				<script src="/development/upload.bundle.js"></script>
-			<%
+			assets.css.forEach((asset) => {
+				%><link href="build/<%= asset %>" rel="stylesheet" type="text/css"><%
+			});
 
 		}
-
  	%>

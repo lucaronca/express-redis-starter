@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-let env = process.env.NODE_ENV || 'development';
+let env = process.env.NODE_ENV || 'production';
 
 // Adding a common render
 app.use(require('./middlewares/commonRender')(env));

@@ -3,28 +3,25 @@
 const path = require('path');
 const Assets = require('../helpers/Assets');
 
-module.exports = function(environment) {
+module.exports = function(req, res, next) {
 
-    return function(req, res, next) {
+    //view name
+    let viewName = req.path.split('/')[1] || 'home';
 
-        //view name
-        let viewName = req.path.split('/')[1] || 'home';
+    res.locals.viewName = viewName;
 
-        res.locals.viewName = viewName;
+    if ( req.app.get('env') != 'production') {
+        res.locals.assets = {};
+        return next();
+    }
 
-        if (environment != 'production') {
-            res.locals.assets = {};
-            return next();
-        }
-
-        // Get assets file names and store they in a specific object passed in view
-        // See Asset helper
-        let assets = new Assets(req, viewName);
-        assets.filter()
-            .then((results) => {
-                res.locals.assets = results;
-                next();
-            });
-    };
+    // Get assets file names and store they in a specific object passed in view
+    // See Asset helper
+    let assets = new Assets(req, viewName);
+    assets.filter()
+        .then((results) => {
+            res.locals.assets = results;
+            next();
+        });
 
 };

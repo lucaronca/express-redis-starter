@@ -1,13 +1,14 @@
 const
 	express = require('express'),
 	router = express.Router(),
+    passport = require('passport'),
 	path = require('path'),
 	formidable = require('formidable'),
 	fs = require('fs'),
 	Document = require('../models/document');
 
 
-router.get('/', (req, res) => {
+router.get('/', passport.authenticationMiddleware(), (req, res) => {
 	res.render('pages/upload');
 });
 

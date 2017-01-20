@@ -3,9 +3,15 @@ const
 	app = express(),
 	path = require('path'),
 	bodyParser = require('body-parser'),
+    passport = require('passport'),
+    session = require('express-session'),
+    client = require('./db'),
+    RedisStore = require('connect-redis')(session),
 	webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
-    webpackHotMiddleware = require('webpack-hot-middleware');
+    webpackHotMiddleware = require('webpack-hot-middleware'),
+    chalk = require('chalk'),
+    open = require('open');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -29,6 +35,25 @@ app.set('env', env);
 
 // Adding a common render
 app.use(require('./middlewares/commonRender'));
+
+// Authentication
+const Auth = require('./helpers/Auth');
+new Auth().setupPassport();
+
+// create a new session and store it existing redis client
+app.use(session({
+    store: new RedisStore({
+        client: client
+    }),
+    secret: process.env.REDIS_STORE_SECRET || 'secret-test',
+    resave: false,
+    saveUninitialized: false
+}));
+
+// init passport authentication
+app.use(passport.initialize());
+// persistent login sessions
+app.use(passport.session());
 
 // App logic
 app.use(require('./controllers'));
@@ -57,6 +82,7 @@ if (env === 'production') {
 }
 
 // Development
+console.log(chalk.cyan('Starting development server...'));
 let webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
     stats: {
@@ -74,7 +100,9 @@ app.use(webpackHotMiddleware(compiler, {
 webpackDevMiddlewareInstance.waitUntilValid(startServer);
 
 function startServer() {
-    app.listen(app.get('port'), () => {
-        console.log('Listening on port ' + app.get('port'))
+    let port = app.get('port');
+    if (env === 'development') open('http://localhost:' + port);
+    app.listen(port, () => {
+        console.log('Listening on port ' + port)
     });
 }

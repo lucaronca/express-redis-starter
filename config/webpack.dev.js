@@ -40,7 +40,6 @@ let config = {
             }
         ]
     },
-    // "path" is now "/" because we're building our app into memory now rather than a build folder
     // "publicPath" is where the hosted app expects the resources
     output: {
         path: PATHS.build,

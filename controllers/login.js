@@ -4,7 +4,14 @@ const
     passport = require('passport');
 
 router.get('/', (req, res) => {
-    res.render('pages/user/login')
+
+    // if user is authenticated not allow access to this page
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    }
+
+    res.render('pages/user/login');
+
 });
 
 router.post('/', passport.authenticate('local', {

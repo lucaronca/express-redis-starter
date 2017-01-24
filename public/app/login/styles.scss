@@ -1,0 +1,30 @@
+/* Login page */
+
+@import '../commons/variables';
+
+// Setting the form border color
+$form-border-color: $medium-gray;
+// Setting the form padding
+$form-padding: $global-padding;
+// Setting the form border radius
+$form-radius: $global-radius;
+// Setting the form background-color
+$form-background-color: #fff;
+
+
+.login-page {
+
+    & > .row {
+
+        padding-bottom: 5vh;
+
+        .log-in-form {
+            background: $form-background-color;
+            border: 1px solid $form-border-color;
+            padding: $form-padding;
+            border-radius: $form-radius;
+        }
+
+    }
+
+}

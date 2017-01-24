@@ -1,3 +1,11 @@
-/**
- * Created by luca.ronca on 23/01/2017.
- */
+$(document).ready(() => {
+
+    let form = $('.log-in-form').parent()
+
+    $('.log-in-form a[type="submit"]').on('click', () => {
+
+        form.submit();
+
+    });
+
+});

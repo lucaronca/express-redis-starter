@@ -20,7 +20,7 @@ class Auth {
         return callback(null)
     }
 
-    setupPassport() {
+    setup() {
 
         passport.serializeUser((user, cb) => {
             cb(null, user.username)

@@ -38,7 +38,7 @@ app.use(require('./middlewares/commonRender'));
 
 // Authentication
 const Auth = require('./helpers/Auth');
-new Auth().setupPassport();
+new Auth().setup();
 
 // create a new session and store it existing redis client
 app.use(session({

@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "start:dev": "cross-env NODE_ENV=development nodemon app",
+    "start:dev": "cross-env NODE_ENV=development nodemon app --ignore public/",
     "start:prod": "cross-env NODE_ENV=production node app",
     "test": "node_modules/.bin/mocha tests/**"
   },

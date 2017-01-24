@@ -33,11 +33,6 @@ let plugins = [
 ];
 
 let common = {
-    output: {
-        path: PATHS.build,
-        filename: '[name].bundle.[chunkhash].js',
-        chunkFilename: '[name].chunk.[chunkhash].js'
-    },
     module: {
         noParse: /node_modules\/foundation-sites/,
         rules: [

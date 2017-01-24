@@ -14,6 +14,7 @@ let config = {
         vendor: ['jquery', 'foundation-sites', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
         home: [path.join(PATHS.app, './home/index.js'), path.join(PATHS.app, './home/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
         upload: [path.join(PATHS.app, './upload/index.js'), path.join(PATHS.app, './upload/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+        login: [path.join(PATHS.app, './login/index.js'), path.join(PATHS.app, './login/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
         common: [path.join(PATHS.app, './commons/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server']
     },
 

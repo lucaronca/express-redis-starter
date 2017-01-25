@@ -6,7 +6,7 @@ const path = require('path'),
     WebpackMd5Hash = require('webpack-md5-hash'),
     ManifestPlugin = require('webpack-manifest-plugin'),
     ChunkManifestPlugin = require('chunk-manifest-webpack-plugin'),
-    PATHS = require('./paths');
+    CONFIG = require('./../config');
 
 let plugins = [
     new webpack.optimize.CommonsChunkPlugin({
@@ -25,7 +25,7 @@ let plugins = [
         $: path.join(__dirname, '..', 'node_modules', 'jquery/dist/jquery'),
         jQuery: path.join(__dirname, '..', 'node_modules', 'jquery/dist/jquery')
     }),
-    new CleanWebpackPlugin([PATHS.build], {
+    new CleanWebpackPlugin([CONFIG.webpack_paths.build], {
         // Without `root` CleanWebpackPlugin won't point to our
         // project and will fail to work.
         root: process.cwd()

@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "start:dev": "cross-env NODE_ENV=development nodemon app --ignore public/",
+    "start:dev": "cross-env NODE_ENV=development node --inspect app",
     "start:prod": "cross-env NODE_ENV=production node app",
     "test": "node_modules/.bin/mocha tests/**"
   },
@@ -38,6 +38,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
     "chalk": "^1.1.3",
+    "chokidar": "^1.6.1",
     "chunk-manifest-webpack-plugin": "^1.0.0",
     "clean-webpack-plugin": "^0.1.14",
     "cross-env": "^3.1.4",

@@ -1,10 +1,11 @@
 'use strict';
 
-const path = require('path'),
+const
+    path = require('path'),
     webpack = require('webpack'),
-    PATHS = require('./paths');
+    PATHS = require('./../config').webpack_paths,
+    port = require('./../config').port;
 
-let port = process.env.PORT || 5000;
 let config = {
 
     cache: true,
@@ -12,10 +13,10 @@ let config = {
     // each value on this object MUST have the extra modules
     entry: {
         vendor: ['jquery', 'foundation-sites', 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
-        home: [path.join(PATHS.app, './home/index.js'), path.join(PATHS.app, './home/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
-        upload: [path.join(PATHS.app, './upload/index.js'), path.join(PATHS.app, './upload/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
-        login: [path.join(PATHS.app, './login/index.js'), path.join(PATHS.app, './login/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
-        common: [path.join(PATHS.app, './commons/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server']
+        home: [path.join(PATHS.src, './home/index.js'), path.join(PATHS.src, './home/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+        upload: [path.join(PATHS.src, './upload/index.js'), path.join(PATHS.src, './upload/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+        login: [path.join(PATHS.src, './login/index.js'), path.join(PATHS.src, './login/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server'],
+        common: [path.join(PATHS.src, './commons/styles.scss'), 'webpack-hot-middleware/client', 'webpack/hot/dev-server']
     },
 
     // this is a default value; just be aware of it
@@ -41,7 +42,7 @@ let config = {
             }
         ]
     },
-    // "publicPath" is where the hosted app expects the resources
+    // 'publicPath' is where the hosted app expects the resources
     output: {
         path: PATHS.build,
         publicPath: 'http://localhost:' + port + '/development/',

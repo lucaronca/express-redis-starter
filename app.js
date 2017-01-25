@@ -2,64 +2,21 @@ const
 	express = require('express'), 
 	app = express(),
 	path = require('path'),
-	bodyParser = require('body-parser'),
-    passport = require('passport'),
-    session = require('express-session'),
-    client = require('./db'),
-    RedisStore = require('connect-redis')(session),
 	webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
-    chalk = require('chalk'),
-    open = require('open');
+    chalk = require('chalk');
 
 app.set('port', (process.env.PORT || 5000));
-
-// Error middleware
-app.use(require('./middlewares/error'));
-
-// View Engine
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs');
-
-// public paths
-app.use('/build', express.static(path.join(__dirname, 'public', 'build')));
-app.use('/docs', express.static(path.join(__dirname, 'uploads')));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
 
 let env = process.env.NODE_ENV || 'production';
 app.set('env', env);
 
-// Adding a common render
-app.use(require('./middlewares/commonRender'));
-
-// Authentication
-const Auth = require('./helpers/Auth');
-new Auth().setup();
-
-// create a new session and store it existing redis client
-app.use(session({
-    store: new RedisStore({
-        client: client
-    }),
-    secret: process.env.REDIS_STORE_SECRET || 'secret-test',
-    resave: false,
-    saveUninitialized: false
-}));
-
-// init passport authentication
-app.use(passport.initialize());
-// persistent login sessions
-app.use(passport.session());
-
-// App logic
-app.use(require('./controllers'));
+// Include server routes as a middleware
+require('./server')(app);
 
 // start webpack
-const webpackConfig = require('./webpack.config')(env);
+const webpackConfig = require('./tools/webpack.config.js')(env);
 let compiler = webpack(webpackConfig);
 
 if (env === 'production') {
@@ -99,10 +56,30 @@ app.use(webpackHotMiddleware(compiler, {
 
 webpackDevMiddlewareInstance.waitUntilValid(startServer);
 
+
+// Do "hot-reloading" of express stuff on the server
+// Throw away cached modules and re-require next time
+// Ensure there's no important state in there!
+const chokidar = require('chokidar');
+const watcher = chokidar.watch('./server');
+
+watcher.on('ready', function() {
+    watcher.on('all', function() {
+        console.log("Clearing /server/ module cache from server");
+        Object.keys(require.cache).forEach(function(id) {
+            /*if (/[\/\\]server[\/\\]/.test(id))*/ delete require.cache[id];
+        });
+    });
+});
+
 function startServer() {
-    let port = app.get('port');
-    if (env === 'development') open('http://localhost:' + port);
-    app.listen(port, () => {
-        console.log('Listening on port ' + port)
+    let http = require('http');
+    const server = http.createServer(app);
+    server.listen(app.get('port'), 'localhost', function(err) {
+        if (err) throw err;
+
+        const addr = server.address();
+
+        console.log('Listening at http://%s:%d', addr.address, addr.port);
     });
 }

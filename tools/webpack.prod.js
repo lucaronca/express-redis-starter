@@ -2,15 +2,15 @@ const path = require('path'),
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-    PATHS = require('./paths');
+    PATHS = require('./../config').webpack_paths;
 
 let config = {
     entry: {
         vendor: ['jquery', 'foundation-sites'],
-            home: [path.join(PATHS.app, './home/index.js'), path.join(PATHS.app, './home/styles.scss')],
-            upload: [path.join(PATHS.app, './upload/index.js'), path.join(PATHS.app, './upload/styles.scss')],
-            login:  [path.join(PATHS.app, './login/index.js'), path.join(PATHS.app, './login/styles.scss')],
-            common: path.join(PATHS.app, './commons/styles.scss')
+            home: [path.join(PATHS.src, './home/index.js'), path.join(PATHS.src, './home/styles.scss')],
+            upload: [path.join(PATHS.src, './upload/index.js'), path.join(PATHS.src, './upload/styles.scss')],
+            login:  [path.join(PATHS.src, './login/index.js'), path.join(PATHS.src, './login/styles.scss')],
+            common: path.join(PATHS.src, './commons/styles.scss')
     },
     output: {
         path: PATHS.build,

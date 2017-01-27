@@ -1,25 +1,37 @@
 const
-	express = require('express'), 
+    http = require('http');
+    express = require('express'),
 	app = express(),
 	path = require('path'),
 	webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
+    config = require('./config')
+    server = require('./server'),
     chalk = require('chalk');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('env', process.env.NODE_ENV || 'production');
 
-let env = process.env.NODE_ENV || 'production';
-app.set('env', env);
+//
+// View engine
+// ---------------------------------------------------------------------------------------
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-// Include server routes as a middleware
-require('./server')(app);
+//
+// Include server logic as a middleware
+// ---------------------------------------------------------------------------------------
+app.use((req, res, next) => {
+    server.app(req, res, next);
+});
 
-// start webpack
-const webpackConfig = require('./tools/webpack.config.js')(env);
+//
+// Start webpack
+// ---------------------------------------------------------------------------------------
+const webpackConfig = require('./tools/webpack.config')(app.get('env'));
 let compiler = webpack(webpackConfig);
 
-if (env === 'production') {
+if (app.get('env') === 'production') {
     compiler.apply(new webpack.ProgressPlugin());
 
     return compiler.run((err, stats) => {
@@ -33,12 +45,12 @@ if (env === 'production') {
         app.set('assets', assets);
 
         // once the assets' name are resolved, start the app
-        startServer();
+        server.start(app);
 
     });
 }
 
-// Development
+// Development mode
 console.log(chalk.cyan('Starting development server...'));
 let webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -54,32 +66,21 @@ app.use(webpackHotMiddleware(compiler, {
     log: console.log
 }));
 
-webpackDevMiddlewareInstance.waitUntilValid(startServer);
+webpackDevMiddlewareInstance.waitUntilValid(server.start.bind(server, app));
 
-
-// Do "hot-reloading" of express stuff on the server
+//
+// Do 'hot-reloading' of express stuff on the server
 // Throw away cached modules and re-require next time
 // Ensure there's no important state in there!
+// ---------------------------------------------------------------------------------------
 const chokidar = require('chokidar');
 const watcher = chokidar.watch('./server');
 
-watcher.on('ready', function() {
-    watcher.on('all', function() {
-        console.log("Clearing /server/ module cache from server");
-        Object.keys(require.cache).forEach(function(id) {
-            /*if (/[\/\\]server[\/\\]/.test(id))*/ delete require.cache[id];
+watcher.on('ready', () => {
+    watcher.on('all', () => {
+        console.log('Clearing /server/ module cache from server');
+        Object.keys(require.cache).forEach((id) => {
+            if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
         });
     });
 });
-
-function startServer() {
-    let http = require('http');
-    const server = http.createServer(app);
-    server.listen(app.get('port'), 'localhost', function(err) {
-        if (err) throw err;
-
-        const addr = server.address();
-
-        console.log('Listening at http://%s:%d', addr.address, addr.port);
-    });
-}

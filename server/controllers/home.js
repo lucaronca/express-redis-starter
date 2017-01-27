@@ -1,7 +1,6 @@
 const
 	express = require('express'),
 	router = express.Router(),
-	Assets = require('../helpers/Assets'),
 	Document = require('../data/models/document');
 
 router.get('/', (req, res, next) => {

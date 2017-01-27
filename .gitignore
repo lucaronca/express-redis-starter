@@ -3,4 +3,4 @@ node_modules
 # Saved files #
 uploads
 # Built assets #
-public/build
+client/build

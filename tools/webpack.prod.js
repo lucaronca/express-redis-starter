@@ -2,18 +2,13 @@ const path = require('path'),
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-    PATHS = require('./paths');
+    config = require('../config'),
+    common = require('./webpack.common');
 
-let config = {
-    entry: {
-        vendor: ['jquery', 'foundation-sites'],
-            home: [path.join(PATHS.app, './home/index.js'), path.join(PATHS.app, './home/styles.scss')],
-            upload: [path.join(PATHS.app, './upload/index.js'), path.join(PATHS.app, './upload/styles.scss')],
-            login:  [path.join(PATHS.app, './login/index.js'), path.join(PATHS.app, './login/styles.scss')],
-            common: path.join(PATHS.app, './commons/styles.scss')
-    },
+let prodConfig = {
+    entry:  common.getEntries('production'),
     output: {
-        path: PATHS.build,
+        path: config.webpack_paths.build,
         filename: '[name].bundle.[chunkhash].js',
         chunkFilename: '[name].chunk.[chunkhash].js'
     },
@@ -58,4 +53,4 @@ let config = {
     ]
 };
 
-module.exports = config;
+module.exports = prodConfig;

@@ -1,8 +1,7 @@
 const
 	express = require('express'),
 	router = express.Router(),
-	Assets = require('../helpers/Assets'),
-	Document = require('../models/document');
+	Document = require('../data/models/document');
 
 router.get('/', (req, res, next) => {
 
@@ -18,8 +17,7 @@ router.get('/', (req, res, next) => {
 		res.render('pages/home', { data, reversed: reverse });
 
 	});
-
 	
-})
+});
 
 module.exports = router;

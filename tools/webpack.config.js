@@ -1,9 +1,9 @@
 'use strict';
 
 const merge = require('webpack-merge'),
-    dev = require('./config/webpack.dev'),
-    prod = require('./config/webpack.prod'),
-    common = require('./config/webpack.common');
+    dev = require('./webpack.dev.js'),
+    prod = require('./webpack.prod.js'),
+    common = require('./webpack.common.js').config;
 
 module.exports = function(env) {
 

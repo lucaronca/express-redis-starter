@@ -21,14 +21,14 @@ router.post('/send', (req, res, next) => {
 	form.multiples = true;
 
 	// create uploads folder if not exists
-	let uploads = path.join(__dirname, '..', '..', 'client', 'uploads');
+	let uploads = path.join(__dirname, '..', '..', 'uploads');
 
 	if (!fs.existsSync(uploads)) {
 		fs.mkdirSync(uploads);
 	}
 
 	// create temporary directory to store uploaded file
-	let tmp = path.join(__dirname, '..', '..', 'public', 'uploads', 'tmp');
+	let tmp = path.join(__dirname, '..', '..', 'uploads', 'tmp');
 
 	if (!fs.existsSync(tmp)) {
 		fs.mkdirSync(tmp);
@@ -89,7 +89,7 @@ router.post('/send', (req, res, next) => {
 	// check file data type if is pdf
     function checkType(file) {
 
-    	return (file.type === "application/pdf") ?
+    	return (file.type === 'application/pdf') ?
 
 			Promise.resolve() :
 

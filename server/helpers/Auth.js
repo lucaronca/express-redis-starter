@@ -1,7 +1,6 @@
 const
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy,
-    authenticationMiddleware = require('../middlewares/auth');
+    LocalStrategy = require('passport-local').Strategy;
 
 const user = {
     username: 'test-user',
@@ -67,9 +66,7 @@ function setupPassport () {
             })
         }
     ));
-
-    passport.authenticationMiddleware = authenticationMiddleware;
-
+    
 }
 
 module.exports = Auth;

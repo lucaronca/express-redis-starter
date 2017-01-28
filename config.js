@@ -14,6 +14,8 @@ exports.webpack_entries = {
     common: ['styles.scss']
 };
 
+exports.env = process.env.NODE_ENV || 'production';
+
 exports.port = process.env.PORT || 5000;
 
 exports.host = process.env.WEBSITE_HOSTNAME || `localhost:${exports.port}`;

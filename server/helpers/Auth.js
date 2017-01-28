@@ -44,9 +44,6 @@ class Auth {
                 })
             }
         ));
-
-        passport.authenticationMiddleware = authenticationMiddleware;
-
     }
 };
 

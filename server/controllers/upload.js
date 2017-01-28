@@ -1,7 +1,7 @@
 const
 	express = require('express'),
 	router = express.Router(),
-    passport = require('passport'),
+    	passport = require('passport'),
 	path = require('path'),
 	formidable = require('formidable'),
 	fs = require('fs'),

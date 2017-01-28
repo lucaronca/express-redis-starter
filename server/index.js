@@ -5,7 +5,7 @@ const
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    client = require('./data/db'),
+    RedisClient = require('./data/db'),
     passport = require('passport'),
     RedisStore = require('connect-redis')(session),
     open = require('open'),
@@ -31,13 +31,15 @@ app.use(bodyParser.json());
 //
 // Authentication
 // ---------------------------------------------------------------------------------------
+
+// This helper sets passport configurations and the strategy
 const Auth = require('./helpers/Auth');
 new Auth().setup();
 
 // Create a new session and store it in an existing redis client
 app.use(session({
     store: new RedisStore({
-        client: client
+        client: RedisClient
     }),
     secret: process.env.REDIS_STORE_SECRET || 'secret-test',
     resave: false,

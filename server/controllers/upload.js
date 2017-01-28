@@ -5,10 +5,11 @@ const
 	path = require('path'),
 	formidable = require('formidable'),
 	fs = require('fs'),
-	Document = require('../data/models/document');
+	Document = require('../data/models/document'),
+        authenticationMiddleware = require('../middlewares/auth');
 
 
-router.get('/', passport.authenticationMiddleware(), (req, res) => {
+router.get('/', authenticationMiddleware, (req, res) => {
 	res.render('pages/upload');
 });
 

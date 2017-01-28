@@ -1,14 +1,15 @@
 const
-    http = require('http');
-    express = require('express'),
+	http = require('http');
+    	express = require('express'),
 	app = express(),
 	path = require('path'),
 	webpack = require('webpack'),
-    webpackDevMiddleware = require('webpack-dev-middleware'),
-    webpackHotMiddleware = require('webpack-hot-middleware'),
-    config = require('./config')
-    server = require('./server'),
-    chalk = require('chalk');
+    	webpackDevMiddleware = require('webpack-dev-middleware'),
+    	webpackHotMiddleware = require('webpack-hot-middleware'),
+    	config = require('./config')
+    	server = require('./server'),
+    	chalk = require('chalk'),
+	chokidar = require('chokidar');
 
 app.set('env', process.env.NODE_ENV || 'production');
 
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 const webpackConfig = require('./tools/webpack.config')(app.get('env'));
 let compiler = webpack(webpackConfig);
 
+// Production
 if (app.get('env') === 'production') {
     compiler.apply(new webpack.ProgressPlugin());
 
@@ -50,7 +52,7 @@ if (app.get('env') === 'production') {
     });
 }
 
-// Development mode
+// Development
 console.log(chalk.cyan('Starting development server...'));
 let webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -73,7 +75,6 @@ webpackDevMiddlewareInstance.waitUntilValid(server.start.bind(server, app));
 // Throw away cached modules and re-require next time
 // Ensure there's no important state in there!
 // ---------------------------------------------------------------------------------------
-const chokidar = require('chokidar');
 const watcher = chokidar.watch('./server');
 
 watcher.on('ready', () => {

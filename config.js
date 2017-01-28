@@ -1,7 +1,6 @@
 const path = require('path');
 
 exports.webpack_paths = {
-
     src: path.join(__dirname, 'client', 'src'),
     build: path.join(__dirname, 'client', 'build')
 };

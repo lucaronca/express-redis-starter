@@ -11,7 +11,7 @@ const
     	chalk = require('chalk'),
 	chokidar = require('chokidar');
 
-app.set('env', process.env.NODE_ENV || 'production');
+app.set('env', config.env);
 
 //
 // View engine

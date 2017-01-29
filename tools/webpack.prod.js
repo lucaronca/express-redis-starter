@@ -2,13 +2,12 @@ const path = require('path'),
     webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-    config = require('../config'),
+    appConfig = require('../config'),
     common = require('./webpack.common');
 
-let prodConfig = {
-    entry:  common.getEntries('production'),
+let config = {
     output: {
-        path: config.webpack_paths.build,
+        path: appConfig.webpack_paths.build,
         filename: '[name].bundle.[chunkhash].js',
         chunkFilename: '[name].chunk.[chunkhash].js'
     },
@@ -53,4 +52,4 @@ let prodConfig = {
     ]
 };
 
-module.exports = prodConfig;
+module.exports = config;

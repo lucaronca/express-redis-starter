@@ -3,14 +3,12 @@
 const
     path = require('path'),
     webpack = require('webpack'),
-    config = require('./../config'),
+    appConfig = require('../config'),
     common = require('./webpack.common');
 
-let devConfig = {
+let config = {
 
     cache: true,
-
-    entry: common.getEntries('development'),
 
     // this is a default value; just be aware of it
     target: 'web',
@@ -38,7 +36,7 @@ let devConfig = {
     // 'publicPath' is where the hosted app expects the resources
     output: {
         path: '/',
-        publicPath: 'http://localhost:' + config.port + '/development/',
+        publicPath: 'http://localhost:' + appConfig.port + '/development/',
         filename: '[name].bundle.js'
     },
 
@@ -48,4 +46,4 @@ let devConfig = {
 
 };
 
-module.exports = devConfig;
+module.exports = config;

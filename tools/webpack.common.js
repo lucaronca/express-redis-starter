@@ -7,11 +7,11 @@ const path = require('path'),
     WebpackMd5Hash = require('webpack-md5-hash'),
     ManifestPlugin = require('webpack-manifest-plugin'),
     ChunkManifestPlugin = require('chunk-manifest-webpack-plugin'),
-    config = require('./../config');
+    appConfig = require('../config');
 
 let plugins = [
     new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
+        name: 'shared',
         minChunks: 2
     }),
     new WebpackMd5Hash(),
@@ -26,14 +26,15 @@ let plugins = [
         $: path.join(__dirname, '..', 'node_modules', 'jquery/dist/jquery'),
         jQuery: path.join(__dirname, '..', 'node_modules', 'jquery/dist/jquery')
     }),
-    new CleanWebpackPlugin([config.webpack_paths.build], {
+    new CleanWebpackPlugin([appConfig.webpack_paths.build], {
         // Without `root` CleanWebpackPlugin won't point to our
         // project and will fail to work.
         root: process.cwd()
     })
 ];
 
-let commonConfig = {
+let config = {
+    entry: getEntries.bind(appConfig, appConfig.env),
     module: {
         noParse: /node_modules\/foundation-sites/,
         rules: [
@@ -66,43 +67,21 @@ let commonConfig = {
     }
 };
 
-exports.config = commonConfig;
-exports.getEntries = (env) => {
+function getEntries(env) {
     let res = {};
-    for( let entry in config.webpack_entries) {
-        if(config.webpack_entries.hasOwnProperty(entry)) {
-            res[entry] = config.webpack_entries[entry].map(asset => {
+    for( let entry in this.webpack_entries) {
+        if(this.webpack_entries.hasOwnProperty(entry)) {
+            res[entry] = this.webpack_entries[entry].map(asset => {
                 if (asset === 'index.js' || asset === 'styles.scss')
-                    return path.join(config.webpack_paths.src, entry, asset);
+                    return path.join(this.webpack_paths.src, entry, asset);
                 // is a module name
                 return asset;
             });
-            if (env === 'development') res[entry].push('webpack-hot-middleware/client', 'webpack/hot/dev-server');
+            if (env === 'development')
+                res[entry].push('webpack-hot-middleware/client', 'webpack/hot/dev-server');
         }
     }
     return res;
 };
-
-/*exports.getEntries = function (env) {
-
-    fs.readdir(path.join(__dirname, '..', 'client', 'src'), (err, data) => {
-
-        if (err) return err;
-
-        let obj = new Object();
-
-        data.forEach((dirName) => {
-            obj[dirName] = new Array();
-            let scriptPath = path.join(config.webpack_paths.src) + `./${dirName}/index.js`;
-            let stylePath =  path.join(config.webpack_paths.src) + `./${dirName}/styles.scss`;
-            if(fs.existsSync(scriptPath)) obj[dirName].push(scriptPath);
-            if(fs.existsSync(stylePath)) obj[dirName].push(stylePath);
-            if (env === 'development') obj[dirName].push('webpack-hot-middleware/client', 'webpack/hot/dev-server');
-        });
-
-        obj.vendor = config.webpack_paths.vendor;
-        if (env === 'development') obj.vendor.push('webpack-hot-middleware/client', 'webpack/hot/dev-server');
-
-    });
-
-}*/
+exports.config = config;
+exports.getEntries = getEntries.bind(appConfig);

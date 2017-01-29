@@ -30,7 +30,7 @@ class Assets {
         this.assetsList.forEach((asset) => {
             let testName = function(name) {
                 // view name and other required assets
-                let isRequiredAsset;
+                let isRequiredAsset = false;
                 this.config.required.forEach((assetName) => {
                     if (name === assetName) isRequiredAsset = true;
                 });

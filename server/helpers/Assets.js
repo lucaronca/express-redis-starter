@@ -6,10 +6,10 @@ const path = require('path');
 let config = {
     required: [
         'common',
-        'vendor'
+        'shared'
     ],
     requiredOrder: {
-        js: ['vendor'],
+        js: ['shared'],
         css: ['common']
     },
     removeScripts: ['common']

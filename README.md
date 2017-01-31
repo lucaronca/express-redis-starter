@@ -34,10 +34,10 @@ There are two main commands to run the application<br>
  * `npm run start:dev` to launch it in development mode, with server side and client side hot reloading.
  * `npm run start:prod` for the production mode, with assets optimization.
 
-When you start the app in dev mode, you have to wiat that webpack complete the bundles, then the server is launched and a new browser window with the app url is opened for you :) <br>
+When you start the app in dev mode, you have to wait that webpack complete the bundles, then the server is launched and a new browser window with the app url is opened for you :) <br>
 Commands for testing will be developed in the future.
 
 ### How to:
 
 The client folder is specifically divided for each view.<br>
-In every view folder you will find an index.js entry that will be the specific file bundled per view, and a styles.scss file that will work in them same way. The common code is, as you can guess, in the 'common' folder: here you will find a scss entry that will be directly compiled and loaded in every page as the first stylesheet source, a font folder and other scss dependencies required from other files. Every piece of code that will be shared between pages would be inserted in this 'commons' folder and required where it will be necessary. It will be bundled in the shared.js asset automatically for you by webpack.
+In every view folder you will find an index.js entry that will be the specific file bundled per view, and a styles.scss file that will work in them same way. The common code is, as you can guess, in the 'common' folder: here you will find a scss entry that will be directly compiled and loaded in every page as the first stylesheet source, as well as a font folder and other scss dependencies required from other files. Every piece of code that will be shared between pages would be inserted in this 'commons' folder and required where it will be necessary. It will be bundled in the shared.js asset automatically by webpack for you.

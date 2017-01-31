@@ -1,8 +1,8 @@
 {
-  "name": "Node_doc_manager",
+  "name": "Redis, express, webpack starter kit",
   "version": "1.0.0",
   "description": "Pdf doc manager built with node, epxress and redis",
-  "repository": "https://github.com/lucaronca/node-doc-manager",
+  "repository": "https://github.com/lucaronca/redis-express-webpack-starter-kit",
   "main": "app.js",
   "scripts": {
     "start": "node app",
@@ -50,7 +50,6 @@
     "file-loader": "^0.9.0",
     "mocha": "^2.2.4",
     "node-sass": "^4.1.1",
-    "nodemon": "^1.11.0",
     "open": "0.0.5",
     "optimize-css-assets-webpack-plugin": "^1.3.0",
     "react-hot-loader": "^1.3.1",

@@ -25,7 +25,7 @@ Every page is provided with a shared js file that contains all the code that is 
 ## Setup / usage / how to
 
 ### Setup:
-* First step, in order to use Redis you need to have it installed. <br> You can install it from [the official donwload page](https://redis.io/download), or if you are a windows user from [the port for windows](https://github.com/MSOpenTech/redis/releases).
+* First step, in order to use Redis you need to have it installed. <br> You can install it from [the official download page](https://redis.io/download), or if you are a windows user from [the port for windows](https://github.com/MSOpenTech/redis/releases).
 * Once you have installed Redis, launch it
 * Then simply install the npm dipendeces of the application with `npm install` and you're ready to go
 

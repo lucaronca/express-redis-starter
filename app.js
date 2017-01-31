@@ -1,14 +1,14 @@
 const
 	http = require('http');
-    	express = require('express'),
+    express = require('express'),
 	app = express(),
 	path = require('path'),
 	webpack = require('webpack'),
-    	webpackDevMiddleware = require('webpack-dev-middleware'),
-    	webpackHotMiddleware = require('webpack-hot-middleware'),
-    	config = require('./config')
-    	server = require('./server'),
-    	chalk = require('chalk'),
+    webpackDevMiddleware = require('webpack-dev-middleware'),
+    webpackHotMiddleware = require('webpack-hot-middleware'),
+    config = require('./config')
+    server = require('./server'),
+    chalk = require('chalk'),
 	chokidar = require('chokidar');
 
 app.set('env', config.env);
@@ -23,7 +23,12 @@ app.set('view engine', 'ejs');
 // Include server logic as a middleware
 // ---------------------------------------------------------------------------------------
 app.use((req, res, next) => {
-    server.app(req, res, next);
+    if (config.env === 'production')
+        return server.app(req, res, next);
+    // in development mode, this middleware doesn't use the chached 'server' variable
+    // but requires again the server entry every time, so that when require cache is flush with
+    // chokidar it requires the update server module
+    require('./server').app(req, res, next);
 });
 
 //
@@ -33,7 +38,7 @@ const webpackConfig = require('./tools/webpack.config')(app.get('env'));
 let compiler = webpack(webpackConfig);
 
 // Production
-if (app.get('env') === 'production') {
+if (config.env === 'production') {
     compiler.apply(new webpack.ProgressPlugin());
 
     return compiler.run((err, stats) => {

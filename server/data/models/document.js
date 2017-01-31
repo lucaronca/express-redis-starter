@@ -12,7 +12,7 @@ exports.create = (data, cb) => {
 
 	function storeDocData() {
 
-		client.set( key, JSON.stringify(data), ( err ) => {
+		client.set( `document:${key}`, JSON.stringify(data), ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -24,7 +24,7 @@ exports.create = (data, cb) => {
 
 	function setYear() {
 
-		client.lpush( data.year, key, ( err ) => {
+		client.lpush( `document:year:${data.year}`, key, ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -36,7 +36,7 @@ exports.create = (data, cb) => {
 
 	function setMonth() {
 
-		client.lpush( data.month, key, ( err ) => {
+		client.lpush( `document:month:${data.month}`, key, ( err ) => {
 
 			if (err) return Promise.reject(err);
 
@@ -112,7 +112,7 @@ function getDocData(key) {
 
 	return new Promise((resolve, reject) => {
 
-		client.get( key, ( err, resp ) => {
+		client.get( `document:${key}`, ( err, resp ) => {
 
 			if (err) reject(err);
 

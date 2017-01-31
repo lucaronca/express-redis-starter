@@ -18,7 +18,7 @@ A brief list of included features:
  * Server side hot reloading with chokidar watch
 
 ##### Details of how the asset optimization was meant 
-Every page is provided with a shared js file that contains all the code that is shared between pages, it includes the code used from from libraries as well (in this example jQuery and Foundation) but <b>only the used code, not the whole library</b> is included in the generated bundle. This file is meant to be changed few times, so most of the time it will be saved in the browser cache. We include also a specific js file per every view. In the same way, the scss source is compiled in a common css file shared between pages and a specific file of contained dimensions for each view.
+Every page is provided with a shared js file that contains, as its name makes you imagine, code that is shared between pages. It includes modules that you require in different pages as weel as the code used from libraries (in this example jQuery and Foundation) but <b>only the used code, not the whole library</b> is included in the generated bundle. This file is meant to be changed few times, so most of the time it will be saved in the browser cache, taking advantage of a faster download. We include also a specific js file per every view, these files are the specific ones where you will work more often, but being divided for each page, they will be of very small size and therefore easy to download. In the same way, the scss source is compiled in a common css file shared between pages and a specific file for each view, of contained dimensions.
 
 
 

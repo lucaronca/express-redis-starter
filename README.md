@@ -14,8 +14,8 @@ A brief list of included features:
  * jQuery and Foundation global integration with Webpack
  * Both development and production configurations
  * Assets optimization in production mode, with common code stored in a shared file to exploit the browser cache
-* Client side hot reloading with webpack hot middleware
-* Server side hot reloading with chokidar watch
+ * Client side hot reloading with webpack hot middleware
+ * Server side hot reloading with chokidar watch
 
 ##### Details of how the asset optimization was meant 
 Every page is provided with a shared js file that contains all the code that is shared between pages, it includes the code used from from libraries as well (in this example jQuery and Foundation) but <b>only the used code, not the whole library</b> is included in the generated bundle. This file is meant to be changed few times, so most of the time it will be saved in the browser cache. We include also a specific js file per every view. In the same way, the scss source is compiled in a common css file shared between pages and a specific file of contained dimensions for each view.

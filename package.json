@@ -25,7 +25,7 @@
     "connect-redis": "^3.2.0",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.2",
-    "express": "^4.12.3",
+    "express": "^4.14.0",
     "express-session": "^1.14.2",
     "formidable": "^1.0.17",
     "foundation-icons": "^1.0.1",

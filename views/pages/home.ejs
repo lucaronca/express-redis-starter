@@ -9,7 +9,7 @@
 
 			<div class="small-12 small-centered columns">
 			
-				<h1>Node doc manager<% if (settings.env === 'development'){ %> - <%= settings.env%> mode<%}%></h1>
+				<h1>Redis, express, webpack starter-kit<% if (settings.env === 'development'){ %> - <%= settings.env%> mode<%}%></h1>
 
 			</div>
 
@@ -31,7 +31,8 @@
 	<%} else { %>
 
 		<div class="row">
-			<a href="/?reverse=<%= !reversed %>">Invert order</a>
+			<a class="button" href="/upload">Upload new file</a>
+			<a class="button float-right" href="/?reverse=<%= !reversed %>">Invert order</a>
 		</div>
 
 		<% data.forEach((doc) => { %>

@@ -5,7 +5,7 @@
 ![NodeJs](https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png)
 ![Webpack](https://dealogic.gallerycdn.vsassets.io/extensions/dealogic/webpack-vsts-extension/1.0.0/1484953063653/Microsoft.VisualStudio.Services.Icons.Default)
 
-A comprehensive and structured app, scalable for different projects. It includes user authentication and data storage with Redis.<br>
+A comprehensive and structured app, scalable for different web projects. It includes user authentication and data storage with Redis.<br>
 A brief list of included features:
 
  * Session storage via [Redis](https://redis.io/)

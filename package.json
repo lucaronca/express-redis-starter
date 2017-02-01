@@ -1,5 +1,5 @@
 {
-  "name": "Redis, express, webpack starter kit",
+  "name": "redis-express-webpack-starter-kit",
   "version": "1.0.0",
   "description": "Pdf doc manager built with node, epxress and redis",
   "repository": "https://github.com/lucaronca/redis-express-webpack-starter-kit",

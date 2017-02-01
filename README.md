@@ -13,7 +13,7 @@ A brief list of included features:
  * Server side file storage (in this case pdf files, but you can change it in any way you want)
  * jQuery and Foundation global integration with Webpack
  * Both development and production configurations
- * Assets optimization in production mode, with common code stored in a shared file to exploit the browser cache
+ * Assets optimization in production mode, with common code stored in a shared file to exploit browser cache
  * Client side hot reloading with webpack hot middleware
  * Server side hot reloading with chokidar watch
 

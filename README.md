@@ -41,3 +41,8 @@ Commands for testing will be developed in the future.
 
 The client folder is specifically divided for each view.<br>
 In every view folder you will find an index.js entry that will be the specific file bundled per view, and a styles.scss file that will work in them same way. The common code is, as you can guess, in the 'common' folder: here you will find a scss entry that will be directly compiled and loaded in every page as the first stylesheet source, as well as a font folder and other scss dependencies required from other files. Every piece of code that will be shared between pages would be inserted in this 'commons' folder and required where it will be necessary. It will be bundled in the shared.js asset automatically by webpack for you.
+
+## Improve
+
+* If you try to upload a certain file and nothing seem to happen, take a look to the browser console and the API response :), this project was originally thought to be a document uploader, so in the Document model there is a check to the file format. Only Pdf file are allowed, so they can be view from the browser when requested from the homepage list. Feel free to change this bheaviour.
+* When you upload a file, some information will be stored in redis coming from to the 'document upload form'. I.e. year, month, day... They are not shown anywhere but they are stored in the databse as a starting point for further developments.

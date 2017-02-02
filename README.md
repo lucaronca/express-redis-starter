@@ -44,5 +44,5 @@ In every view folder you will find an index.js entry that will be the specific f
 
 ## Improve
 
-* If you try to upload a certain file and nothing seem to happen, take a look to the browser console and the API response :), this project was originally thought to be a document uploader, so in the Document model there is a check to the file format. Only Pdf file are allowed, so they can be view from the browser when requested from the homepage list. Feel free to change this bheaviour.
+* If you try to upload a certain file and nothing seem to happen, take a look to the browser console and the API response :), this project was originally thought to be a document uploader, so in the Document model there is a check to the file format. Only Pdf file are allowed, so that they can be view from the browser when requested from the homepage list. Feel free to change this bheaviour.
 * When you upload a file, some information will be stored in redis coming from to the 'document upload form'. I.e. year, month, day... They are not shown anywhere but they are stored in the databse as a starting point for further developments.

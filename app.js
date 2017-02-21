@@ -1,9 +1,9 @@
 const
-	http = require('http');
+    http = require('http');
     express = require('express'),
-	app = express(),
-	path = require('path'),
-	webpack = require('webpack'),
+    app = express(),
+    path = require('path'),
+    webpack = require('webpack'),
     webpackDevMiddleware = require('webpack-dev-middleware'),
     webpackHotMiddleware = require('webpack-hot-middleware'),
     config = require('./config')

@@ -9,7 +9,7 @@ const
     config = require('./config')
     server = require('./server'),
     chalk = require('chalk'),
-	chokidar = require('chokidar');
+    chokidar = require('chokidar');
 
 app.set('env', config.env);
 

@@ -1,4 +1,4 @@
-# Starter server with Express, Redis and Webpack
+# Starter server with Express and Redis, bundled with Webpack
 
 
 ![Redis](https://www.shareicon.net/data/128x128/2015/08/21/88383_logo_512x512.png)
